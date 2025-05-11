@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # WATCH_DIR="./"
-MAKE_DIR="./"
-EXE_FILE="./main"
+MAKE_DIR="./src"
+EXE_FILE="./src/main"
 
 # # Compilazione iniziale prima di entrare nel ciclo
 # echo "🔧 Compilando il progetto per la prima volta..."
