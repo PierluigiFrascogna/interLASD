@@ -10,48 +10,48 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class TestableContainer {
-  // Must extend Container
+  template <typename Data>
+  class TestableContainer: virtual public Container {
+    // Must extend Container
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // ...
+      TestableContainer() = default; // Default constructor
 
-public:
+    public:
 
-  // Destructor
-  // ~TestableContainer() specifiers
+      // Destructor
+      virtual ~TestableContainer() = default;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+      // Copy assignment
+      virtual TestableContainer& operator=(const TestableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+      // Move assignment
+      virtual TestableContainer& operator=(const TestableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+      // Comparison operators
+      virtual bool operator==(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
+      virtual bool operator!=(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function
+      // Specific member function
 
-  // type Exists(argument) specifiers; // (concrete function should not throw exceptions)
+      virtual bool Exists(const Data&) noexcept = 0; // (concrete function should not throw exceptions)
 
-};
+  };
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
