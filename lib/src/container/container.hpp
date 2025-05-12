@@ -58,7 +58,7 @@ namespace lasd {
 
   /* ************************************************************************** */
 
-  class ClearableContainer: virtual protected Container {
+  class ClearableContainer: virtual public Container {
     // Must extend Container
 
     private:
@@ -100,7 +100,7 @@ namespace lasd {
 
   /* ************************************************************************** */
 
-  class ResizableContainer: virtual protected ClearableContainer {
+  class ResizableContainer: virtual public ClearableContainer {
     // Must extend ClearableContainer
 
     private:
