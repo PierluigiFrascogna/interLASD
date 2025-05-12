@@ -92,9 +92,7 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual void Clear() noexcept {
-        size = 0;
-      };
+      virtual void Clear() noexcept = 0;
 
   };
 
@@ -134,17 +132,13 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual void Resize(ulong newSize) noexcept {
-        size = newSize;
-      };
+      virtual void Resize(ulong newSize) noexcept = 0;
 
       /* ************************************************************************ */
 
       // Specific member function (inherited from ClearableContainer)
 
-      virtual void Clear() noexcept override {
-        Resize(0);
-      }; // Override ClearableContainer member
+      virtual void Clear() noexcept override = 0; // Override ClearableContainer member
 
   };
 
