@@ -34,7 +34,7 @@ namespace lasd {
       virtual Container& operator=(const Container&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual Container& operator=(const Container&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual Container& operator=(Container&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -80,7 +80,7 @@ namespace lasd {
       virtual ClearableContainer& operator=(const ClearableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual ClearableContainer& operator=(const ClearableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual ClearableContainer& operator=(ClearableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -120,7 +120,7 @@ namespace lasd {
       virtual ResizableContainer& operator=(const ResizableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual ResizableContainer& operator=(const ResizableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual ResizableContainer& operator=(ResizableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 

@@ -35,7 +35,7 @@ namespace lasd {
       virtual TestableContainer& operator=(const TestableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual TestableContainer& operator=(const TestableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual TestableContainer& operator=(TestableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 

@@ -39,7 +39,7 @@ namespace lasd {
       virtual TraversableContainer& operator=(const TraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual TraversableContainer& operator=(const TraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual TraversableContainer& operator=(TraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -94,7 +94,7 @@ namespace lasd {
       virtual PreOrderTraversableContainer& operator=(const PreOrderTraversableContainer& ) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PreOrderTraversableContainer& operator=(const PreOrderTraversableContainer&&) noexcept= delete; // Move assignment of abstract types is not possible.
+      virtual PreOrderTraversableContainer& operator=(PreOrderTraversableContainer&&) noexcept= delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -151,7 +151,7 @@ namespace lasd {
       virtual PostOrderTraversableContainer& operator=(const PostOrderTraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PostOrderTraversableContainer& operator=(const PostOrderTraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual PostOrderTraversableContainer& operator=(PostOrderTraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
