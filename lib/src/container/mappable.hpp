@@ -80,10 +80,10 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual const PreOrderMappableContainer& operator=(const PreOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      virtual PreOrderMappableContainer& operator=(const PreOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual const PreOrderMappableContainer& operator=(const PreOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual PreOrderMappableContainer& operator=(const PreOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -132,10 +132,10 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual const PostOrderMappableContainer& operator=(const PostOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      virtual PostOrderMappableContainer& operator=(const PostOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual const PostOrderMappableContainer& operator=(const PostOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      virtual PostOrderMappableContainer& operator=(const PostOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
