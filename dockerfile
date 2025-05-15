@@ -21,7 +21,7 @@ RUN apt update && apt install -y \
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
 
 # Crea la directory di lavoro e ci entra
-WORKDIR /interLASD/app
+WORKDIR /interLASD1/lib
 
 # Copia la libreria e cambia i permessi di esecuzione
 COPY ./lib /interLASD1/lib
