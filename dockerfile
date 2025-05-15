@@ -14,8 +14,8 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 # Installa g++-13, make ed il tool per notificare cambi di file
 RUN apt update && apt install -y \
     g++-13 \
-    make \
-    inotify-tools
+    make 
+    # inotify-tools
 
 # Imposta g++-13 come compilatore predefinito
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100

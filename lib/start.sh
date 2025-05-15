@@ -26,6 +26,8 @@ EXE_FILE="./src/main"
 
 
 clear
+echo "🧼 Pulizia..." && \
+make clean -C $MAKE_DIR && \
 echo "🔧 Compilazione..." && \
 make -C $MAKE_DIR ${OBJTOCOMPILE:-} && \
 echo "🚀 Running..." && \
