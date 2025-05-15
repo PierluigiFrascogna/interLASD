@@ -33,10 +33,10 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual LinearContainer& operator=(const LinearContainer&) = delete; // Copy assignment of abstract types is not possible.
+      LinearContainer& operator=(const LinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual LinearContainer& operator=(LinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      LinearContainer& operator=(LinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -100,10 +100,10 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual MutableLinearContainer& operator=(const MutableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
+      MutableLinearContainer& operator=(const MutableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual MutableLinearContainer& operator=(MutableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      MutableLinearContainer& operator=(MutableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -157,10 +157,10 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual SortableLinearContainer& operator=(const SortableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
+      SortableLinearContainer& operator=(const SortableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual SortableLinearContainer& operator=(SortableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not be possible.
+      SortableLinearContainer& operator=(SortableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not be possible.
 
       /* ************************************************************************ */
 

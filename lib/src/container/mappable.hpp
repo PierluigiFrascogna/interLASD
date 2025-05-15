@@ -36,16 +36,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual MappableContainer& operator=(const MappableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      MappableContainer& operator=(const MappableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual MappableContainer& operator=(MappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      MappableContainer& operator=(MappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const MappableContainer&) = delete; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const MappableContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator==(const MappableContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const MappableContainer&) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -80,16 +80,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual PreOrderMappableContainer& operator=(const PreOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      PreOrderMappableContainer& operator=(const PreOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PreOrderMappableContainer& operator=(PreOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      PreOrderMappableContainer& operator=(PreOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
+      bool operator==(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
+      bool operator!=(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -132,16 +132,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual PostOrderMappableContainer& operator=(const PostOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      PostOrderMappableContainer& operator=(const PostOrderMappableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PostOrderMappableContainer& operator=(PostOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      PostOrderMappableContainer& operator=(PostOrderMappableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const PostOrderMappableContainer) = delete; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const PostOrderMappableContainer) = delete; // Comparison of abstract types is not possible.
+      bool operator==(const PostOrderMappableContainer) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const PostOrderMappableContainer) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 

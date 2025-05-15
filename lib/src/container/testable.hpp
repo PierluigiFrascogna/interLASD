@@ -32,16 +32,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual TestableContainer& operator=(const TestableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      TestableContainer& operator=(const TestableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual TestableContainer& operator=(TestableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      TestableContainer& operator=(TestableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator==(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const TestableContainer&) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 

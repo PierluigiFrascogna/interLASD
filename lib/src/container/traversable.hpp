@@ -36,16 +36,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual TraversableContainer& operator=(const TraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      TraversableContainer& operator=(const TraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual TraversableContainer& operator=(TraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      TraversableContainer& operator=(TraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
-      virtual bool operator!=(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator==(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator!=(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
 
       /* ************************************************************************ */
 
@@ -91,16 +91,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual PreOrderTraversableContainer& operator=(const PreOrderTraversableContainer& ) = delete; // Copy assignment of abstract types is not possible.
+      PreOrderTraversableContainer& operator=(const PreOrderTraversableContainer& ) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PreOrderTraversableContainer& operator=(PreOrderTraversableContainer&&) noexcept= delete; // Move assignment of abstract types is not possible.
+      PreOrderTraversableContainer& operator=(PreOrderTraversableContainer&&) noexcept= delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
-      virtual bool operator!=(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator==(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator!=(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
 
       /* ************************************************************************ */
 
@@ -148,16 +148,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual PostOrderTraversableContainer& operator=(const PostOrderTraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
+      PostOrderTraversableContainer& operator=(const PostOrderTraversableContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual PostOrderTraversableContainer& operator=(PostOrderTraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      PostOrderTraversableContainer& operator=(PostOrderTraversableContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual void operator==(const PostOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
-      virtual void operator!=(const PostOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator==(const PostOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator!=(const PostOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
 
       /* ************************************************************************ */
 

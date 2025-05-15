@@ -33,16 +33,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual DictionaryContainer& operator=(const DictionaryContainer&) = delete; // Copy assignment of abstract types is not possible.
+      DictionaryContainer& operator=(const DictionaryContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual DictionaryContainer& operator=(DictionaryContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      DictionaryContainer& operator=(DictionaryContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const DictionaryContainer&) = delete; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const DictionaryContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator==(const DictionaryContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const DictionaryContainer&) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -80,16 +80,16 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Copy assignment
-      virtual const OrderedDictionaryContainer& operator=(const OrderedDictionaryContainer&) = delete; // Copy assignment of abstract types is not possible.
+      OrderedDictionaryContainer& operator=(const OrderedDictionaryContainer&) = delete; // Copy assignment of abstract types is not possible.
 
       // Move assignment
-      virtual const OrderedDictionaryContainer& operator=(OrderedDictionaryContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
+      OrderedDictionaryContainer& operator=(OrderedDictionaryContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
       /* ************************************************************************ */
 
       // Comparison operators
-      virtual bool operator==(const OrderedDictionaryContainer&) = delete; // Comparison of abstract types is not possible.
-      virtual bool operator!=(const OrderedDictionaryContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator==(const OrderedDictionaryContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const OrderedDictionaryContainer&) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 
