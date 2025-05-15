@@ -10,173 +10,173 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class LinearContainer {
-  // Must extend PreOrderTraversableContainer<Data>,
-  //             PostOrderTraversableContainer<Data>
+  template <typename Data>
+  class LinearContainer: virtual public PreOrderTraversableContainer<Data>, virtual public PostOrderTraversableContainer<Data> {
+    // Must extend PreOrderTraversableContainer<Data>,
+    //             PostOrderTraversableContainer<Data>
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // ...
+      using Container::size;
 
-public:
+    public:
 
-  // Destructor
-  // ~LinearContainer() specifiers
+      // Destructor
+      virtual ~LinearContainer() = default;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+      // Copy assignment
+      virtual LinearContainer& operator=(const LinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+      // Move assignment
+      virtual LinearContainer& operator=(LinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is possible.
+      // Comparison operators
+      bool operator==(const LinearContainer&) const noexcept; // Comparison of abstract types is possible.
+      bool operator!=(const LinearContainer&) const noexcept; // Comparison of abstract types is possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member functions
+      // Specific member functions
 
-  // type operator[](argument) specifiers; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
+      virtual const Data& operator[](ulong i) const = 0; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
 
-  // type Front() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
+      virtual const Data& Front() const; // (non-mutable version; concrete function must throw std::length_error when empty)
 
-  // type Back() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
+      virtual const Data& Back() const; // (non-mutable version; concrete function must throw std::length_error when empty)
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from TraversableContainer)
+      // Specific member function (inherited from TraversableContainer)
 
-  // using typename TraversableContainer<Data>::TraverseFun;
+      using typename TraversableContainer<Data>::TraverseFun;
 
-  // type Traverse(argument) specifiers; // Override TraversableContainer member
+      virtual void Traverse(TraverseFun func) const override; // Override TraversableContainer member
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from PreOrderTraversableContainer)
+      // Specific member function (inherited from PreOrderTraversableContainer)
 
-  // type PreOrderTraverse(argument) specifiers; // Override PreOrderTraversableContainer member
+      virtual void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from PostOrderTraversableContainer)
+      // Specific member function (inherited from PostOrderTraversableContainer)
 
-  // type PostOrderTraverse(argument) specifiers; // Override PostOrderTraversableContainer member
+      virtual void PostOrderTraverse(TraverseFun) const override; // Override PostOrderTraversableContainer member
 
-};
+  };
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class MutableLinearContainer {
-  // Must extend LinearContainer<Data>,
-  //             PreOrderMappableContainer<Data>,
-  //             PostOrderMappableContainer<Data>
+  template <typename Data>
+  class MutableLinearContainer: virtual public LinearContainer<Data>, virtual public PreOrderMappableContainer<Data>, virtual public PostOrderMappableContainer<Data> {
+    // Must extend LinearContainer<Data>,
+    //             PreOrderMappableContainer<Data>,
+    //             PostOrderMappableContainer<Data>
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // ...
+      using LinearContainer<Data>::size;
 
-public:
+    public:
 
-  // Destructor
-  // ~MutableLinearContainer() specifiers
+      // Destructor
+      virtual ~MutableLinearContainer() = default;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+      // Copy assignment
+      virtual MutableLinearContainer& operator=(const MutableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+      // Move assignment
+      virtual MutableLinearContainer& operator=(MutableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member functions
+      // Specific member functions
 
-  // type operator[](argument) specifiers; // (mutable version; concrete function must throw std::out_of_range when out of range)
+      virtual Data& operator[](ulong i) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
 
-  // type Front() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
+      virtual Data& Front(); // (mutable version; concrete function must throw std::length_error when empty)
 
-  // type Back() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
+      virtual Data& Back(); // (mutable version; concrete function must throw std::length_error when empty)
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from MappableContainer)
+      // Specific member function (inherited from MappableContainer)
 
-  // using typename MappableContainer<Data>::MapFun;
+      using typename MappableContainer<Data>::MapFun;
 
-  // type Map(argument) specifiers; // Override MappableContainer member
+      void Map(MapFun) override; // Override MappableContainer member
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from PreOrderMappableContainer)
+      // Specific member function (inherited from PreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
+      void PreOrderMap(MapFun) override; // Override PreOrderMappableContainer member
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from PostOrderMappableContainer)
+      // Specific member function (inherited from PostOrderMappableContainer)
 
-  // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
+      void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
 
-};
+  };
 
-template <typename Data>
-class SortableLinearContainer {
-  // Must extend MutableLinearContainer<Data>
+  template <typename Data>
+  class SortableLinearContainer: virtual public MutableLinearContainer<Data> {
+    // Must extend MutableLinearContainer<Data>
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // ...
+      // ...
 
-public:
+    public:
 
-  // Destructor
-  // ~SortableLinearContainer() specifiers
+      // Destructor
+      virtual ~SortableLinearContainer() = default;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+      // Copy assignment
+      virtual SortableLinearContainer& operator=(const SortableLinearContainer&) = delete; // Copy assignment of abstract types is not possible.
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not be possible.
+      // Move assignment
+      virtual SortableLinearContainer& operator=(SortableLinearContainer&&) noexcept = delete; // Move assignment of abstract types is not be possible.
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function
+      // Specific member function
 
-  // type Sort() specifiers;
+      void Sort() noexcept;
 
-protected:
+    protected:
 
-  // Auxiliary member functions
+      // Auxiliary member functions
 
-  // ...
+      // ...
 
-};
+  };
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
