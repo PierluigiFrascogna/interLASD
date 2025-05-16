@@ -109,7 +109,7 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual Data& operator[](ulong i) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
+      virtual Data& operator[](ulong index) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
 
       virtual Data& Front(); // (mutable version; concrete function must throw std::length_error when empty)
 
