@@ -88,8 +88,8 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Comparison operators
-      bool operator==(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
-      bool operator!=(const MappableContainer&) specifiers; // Comparison of abstract types is not possible.
+      bool operator==(const PreOrderMappableContainer&) = delete; // Comparison of abstract types is not possible.
+      bool operator!=(const PreOrderMappableContainer&) = delete; // Comparison of abstract types is not possible.
 
       /* ************************************************************************ */
 
@@ -103,7 +103,7 @@ namespace lasd {
 
       // Specific member function (inherited from MappableContainer)
 
-      inline void Map(MapFun) override {
+      inline void Map(MapFun func) override {
         PreOrderMap(func);
       }; // Override MappableContainer member
 
@@ -155,7 +155,7 @@ namespace lasd {
 
       // Specific member function (inherited from MappableContainer)
 
-      inline void Map(MapFun) override {
+      inline void Map(MapFun func) override {
         PostOrderMap(func);
       }; // Override MappableContainer member
 

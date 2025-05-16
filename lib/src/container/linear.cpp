@@ -45,7 +45,7 @@ namespace lasd {
     template <typename Data>
     Data& MutableLinearContainer<Data>::Front() {
         if(size == 0) {
-            throw std::length_error("Container is empty")
+            throw std::length_error("Container is empty");
         } else {
             return operator[](0);
         }
@@ -84,14 +84,14 @@ namespace lasd {
     template <typename Data>
     void SortableLinearContainer<Data>::Sort() noexcept {
         for(ulong i=1; i<size; i++){
-            Data key=operator[](i);
+            Data key=SortableLinearContainer::operator[](i);
             ulong j=i;
 
-            while (j>0 && operator[](j-1)>key){
-                operator[](j)=operator[](j-1);
+            while (j>0 && SortableLinearContainer::operator[](j-1)>key){
+                SortableLinearContainer::operator[](j)=SortableLinearContainer::operator[](j-1);
                 j--;
             }
-            operator[](j)=key;
+            SortableLinearContainer::operator[](j)=key;
         }
     }
 

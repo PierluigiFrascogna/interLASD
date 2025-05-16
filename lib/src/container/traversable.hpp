@@ -59,13 +59,13 @@ namespace lasd {
       using FoldFun = std::function<Accumulator(const Data &, const Accumulator &)>;
 
       template <typename Accumulator>
-      virtual Accumulator Fold(FoldFun<Accumulator> func, Accumulator acc) const;
+      Accumulator Fold(FoldFun<Accumulator> func, Accumulator acc) const;
 
       /* ************************************************************************ */
 
       // Specific member function (inherited from TestableContainer)
 
-      bool Exists(const Data&) const override; // Override TestableContainer member
+      virtual bool Exists(const Data&) const override; // Override TestableContainer member
 
   };
 
@@ -99,8 +99,8 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Comparison operators
-      bool operator==(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
-      bool operator!=(const TraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator==(const PreOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
+      bool operator!=(const PreOrderTraversableContainer&) = delete; // Comparison of abstract types might be possible.
 
       /* ************************************************************************ */
 
@@ -114,13 +114,13 @@ namespace lasd {
       using FoldFun = typename TraversableContainer<Data>::FoldFun<Accumulator>;
 
       template <typename Accumulator>
-      inline Accumulator PreOrderFold(FoldFun<Accumulator> func, Accumulator acc) const;
+      Accumulator PreOrderFold(FoldFun<Accumulator> func, Accumulator acc) const;
 
       /* ************************************************************************ */
 
       // Specific member function (inherited from TraversableContainer)
 
-      inline void Traverse(TraverseFun) const override {
+      inline void Traverse(TraverseFun func) const override {
         PreOrderTraverse(func);
       }; // Override TraversableContainer member
 
@@ -171,7 +171,7 @@ namespace lasd {
       using FoldFun = typename TraversableContainer<Data>::FoldFun<Accumulator>;
 
       template <typename Accumulator>
-      virtual Accumulator PostOrderFold(FoldFun<Accumulator> func, Accumulator acc) const;
+      Accumulator PostOrderFold(FoldFun<Accumulator> func, Accumulator acc) const;
 
       /* ************************************************************************ */
 

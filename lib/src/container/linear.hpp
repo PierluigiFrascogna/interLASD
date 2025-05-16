@@ -147,7 +147,7 @@ namespace lasd {
 
     protected:
 
-      // ...
+      using MutableLinearContainer<Data>::size;
 
     public:
 
