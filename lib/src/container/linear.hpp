@@ -66,13 +66,13 @@ namespace lasd {
 
       // Specific member function (inherited from PreOrderTraversableContainer)
 
-      virtual void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
+      virtual void PreOrderTraverse(TraverseFun func) const override; // Override PreOrderTraversableContainer member
 
       /* ************************************************************************ */
 
       // Specific member function (inherited from PostOrderTraversableContainer)
 
-      virtual void PostOrderTraverse(TraverseFun) const override; // Override PostOrderTraversableContainer member
+      virtual void PostOrderTraverse(TraverseFun func) const override; // Override PostOrderTraversableContainer member
 
   };
 
@@ -91,6 +91,10 @@ namespace lasd {
     protected:
 
       using LinearContainer<Data>::size;
+
+      using LinearContainer<Data>::operator[];
+      using LinearContainer<Data>::Front;
+      using LinearContainer<Data>::Back;
 
     public:
 

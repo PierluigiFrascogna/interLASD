@@ -53,7 +53,7 @@ namespace lasd {
 
       using MapFun = std::function<void(Data &)>;
 
-      void Map(MapFun) = 0;
+      virtual void Map(MapFun) = 0;
 
   };
 

@@ -65,7 +65,7 @@ namespace lasd {
 
       // Specific member function (inherited from TestableContainer)
 
-      virtual bool Exists(const Data&) const override; // Override TestableContainer member
+      virtual bool Exists(const Data& val) const noexcept override; // Override TestableContainer member
 
   };
 
@@ -165,7 +165,7 @@ namespace lasd {
 
       using typename TraversableContainer<Data>::TraverseFun;
 
-      virtual void PostOrderTraverse(TraverseFun) = 0;
+      virtual void PostOrderTraverse(TraverseFun) const = 0;
 
       template <typename Accumulator>
       using FoldFun = typename TraversableContainer<Data>::FoldFun<Accumulator>;

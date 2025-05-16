@@ -15,7 +15,7 @@ namespace lasd {
     };
 
     template <typename Data>
-    inline bool TraversableContainer<Data>::Exists(const Data& val) const {
+    inline bool TraversableContainer<Data>::Exists(const Data& val) const noexcept {
         bool exists = false;
         Traverse(
             [val, &exists](const Data& currVal) {

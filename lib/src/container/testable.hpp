@@ -47,7 +47,7 @@ namespace lasd {
 
       // Specific member function
 
-      virtual bool Exists(const Data&) noexcept = 0; // (concrete function should not throw exceptions)
+      virtual bool Exists(const Data&) const noexcept = 0; // (concrete function should not throw exceptions)
 
   };
 
