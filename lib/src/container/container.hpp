@@ -46,11 +46,11 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual bool Empty() const noexcept {
+      virtual inline bool Empty() const noexcept {
         return size == 0;
       }; // (concrete function should not throw exceptions)
 
-      virtual ulong Size() const noexcept {
+      inline ulong Size() const noexcept {
         return size;
       }; // (concrete function should not throw exceptions)
 
@@ -138,7 +138,9 @@ namespace lasd {
 
       // Specific member function (inherited from ClearableContainer)
 
-      virtual void Clear() noexcept override = 0; // Override ClearableContainer member
+      inline void Clear() noexcept override {
+        Resize(0);
+      }; // Override ClearableContainer member
 
   };
 
