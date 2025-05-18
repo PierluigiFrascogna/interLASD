@@ -35,27 +35,27 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Specific constructors
-      Vector(const ulong size); // A vector with a given initial dimension
-      Vector(const TraversableContainer<Data>& travCont); // A vector obtained from a TraversableContainer
-      Vector(const MappableContainer<Data>& mapCont); // A vector obtained from a MappableContainer
+      Vector(const ulong); // A vector with a given initial dimension
+      Vector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
+      Vector(const MappableContainer<Data>&); // A vector obtained from a MappableContainer
 
       /* ************************************************************************ */
 
       // Copy constructor
-      Vector(const Vector& copyVec);
+      Vector(const Vector&);
 
       // Move constructor
-      Vector(Vector&& moveVec) noexcept;
+      Vector(Vector&&) noexcept;
 
       /* ************************************************************************ */
 
       // Destructor
-      ~Vector();
+      virtual ~Vector();
 
       /* ************************************************************************ */
 
       // Copy assignment
-      Vector& operator=(const Vector& copyVec);
+      Vector& operator=(const Vector&);
 
       // Move assignment
       Vector& operator=(Vector&&) noexcept;
@@ -70,7 +70,7 @@ namespace lasd {
 
       // Specific member functions (inherited from MutableLinearContainer)
 
-      Data& operator[](ulong index) override; // Override MutableLinearContainer member (must throw std::out_of_range when out of range)
+      Data& operator[](ulong) override; // Override MutableLinearContainer member (must throw std::out_of_range when out of range)
 
       Data& Front() override; // Override MutableLinearContainer member (must throw std::length_error when empty)
 
@@ -80,7 +80,7 @@ namespace lasd {
 
       // Specific member functions (inherited from LinearContainer)
 
-      const Data& operator[](ulong index) const override; // Override LinearContainer member (must throw std::out_of_range when out of range)
+      const Data& operator[](ulong) const override; // Override LinearContainer member (must throw std::out_of_range when out of range)
 
       const Data& Front() const override; // Override LinearContainer member (must throw std::length_error when empty)
 
@@ -90,7 +90,7 @@ namespace lasd {
 
       // Specific member function (inherited from ResizableContainer)
 
-      void Resize(ulong newSize) noexcept override; // Override ResizableContainer member
+      void Resize(ulong) noexcept override; // Override ResizableContainer member
 
       /* ************************************************************************ */
 
@@ -107,7 +107,7 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class SortableVector {
+  class SortableVector: virtual public Vector<Data>, virtual public SortableLinearContainer<Data> {
     // Must extend Vector<Data>,
     //             SortableLinearContainer<Data>
 
@@ -117,42 +117,42 @@ namespace lasd {
 
     protected:
 
-      // using Container::???;
+      using Container::size;
 
-      // ...
+      using Vector<Data>::elements;
 
     public:
 
       // Default constructor
-      // SortableVector() specifiers;
+      SortableVector() = default;
 
       /* ************************************************************************ */
 
       // Specific constructors
-      // SortableVector(argument) specifiers; // A vector with a given initial dimension
-      // SortableVector(argument) specifiers; // A vector obtained from a TraversableContainer
-      // SortableVector(argument) specifiers; // A vector obtained from a MappableContainer
+      SortableVector(const ulong); // A vector with a given initial dimension
+      SortableVector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
+      SortableVector(const MappableContainer<Data>&); // A vector obtained from a MappableContainer
 
       /* ************************************************************************ */
 
       // Copy constructor
-      // SortableVector(argument) specifiers;
+      SortableVector(const SortableVector&);
 
       // Move constructor
-      // SortableVector(argument) specifiers;
+      SortableVector(SortableVector&&) noexcept;
 
       /* ************************************************************************ */
 
       // Destructor
-      // ~SortableVector() specifiers;
+      virtual ~SortableVector() = default;
 
       /* ************************************************************************ */
 
       // Copy assignment
-      // type operator=(argument) specifiers;
+      SortableVector& operator=(const SortableVector&);
 
       // Move assignment
-      // type operator=(argument) specifiers;
+      SortableVector& operator=(SortableVector&&) noexcept;
 
     protected:
 

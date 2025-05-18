@@ -116,22 +116,19 @@ namespace lasd {
     // Index operator (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::operator[](ulong index) const {
-        if(index >= size) throw std::out_of_range("Index out of range");
-        return elements[index];
+        return const_cast<Vector<Data>&>(*this).operator[](index);
     }
 
     // Front element (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::Front() const {
-        if(Empty()) throw std::length_error("Vector is empty");
-        return elements[0];
+        return const_cast<Vector<Data>&>(*this).Front();
     }
 
     // Back element (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::Back() const {
-        if(Empty()) throw std::length_error("Vector is empty");
-        return elements[size - 1];
+        return const_cast<Vector<Data>&>(*this).Back();
     }
 
     // Resize function
@@ -164,6 +161,39 @@ namespace lasd {
 
     /* ************************************************************************** */
 
+    // Constructor for a vector with a given initial dimension
+    template <typename Data>
+    SortableVector<Data>::SortableVector(const ulong newSize): Vector<Data>(newSize) { }
+
+    // Constructor for a vector obtained from a TraversableContainer
+    template <typename Data>
+    SortableVector<Data>::SortableVector(const TraversableContainer<Data>& travCont): Vector<Data>(travCont.Size()) { }
+
+    // Constructor for a vector obtained from a MappableContainer
+    template <typename Data>
+    SortableVector<Data>::SortableVector(const MappableContainer<Data>& mapCont): Vector<Data>(mapCont.Size()) { }
+
+    // Copy constructor
+    template <typename Data>
+    SortableVector<Data>::SortableVector(const SortableVector& copyVec): Vector<Data>(copyVec) { }
+
+    // Move constructor
+    template <typename Data>
+    SortableVector<Data>::SortableVector(SortableVector&& moveVec) noexcept: Vector<Data>(std::move(moveVec)) { }
+
+    // Copy assignment
+    template <typename Data>
+    SortableVector<Data>& SortableVector<Data>::operator=(const SortableVector& copyVec) {
+        Vector<Data>::operator=(copyVec);
+        return *this;
+    }
+
+    // Move assignment
+    template <typename Data>
+    SortableVector<Data>& SortableVector<Data>::operator=(SortableVector&& moveVec) noexcept {
+        Vector<Data>::operator=(std::move(moveVec));
+        return *this;
+    }
 
     /* ************************************************************************** */
 
