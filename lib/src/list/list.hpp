@@ -10,184 +10,197 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class List {
-  // Must extend MutableLinearContainer<Data>,
-  //             ClearableContainer
+  template <typename Data>
+  class List: virtual public MutableLinearContainer<Data>, ClearableContainer {
+    // Must extend MutableLinearContainer<Data>,
+    //             ClearableContainer
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // using Container::???;
+      using Container::size;
 
-  struct Node {
+      struct Node {
 
-    // Data
-    // ...
+        Data key;
+        Node* next;
 
-    /* ********************************************************************** */
+        /* ********************************************************************** */
 
-    // Specific constructors
-    // ...
+        // Specific constructors
+        Node()=default;
+        inline Node(const Data& x) : key(x) { };
+        inline Node(Data&& x) noexcept : key(std::move(x)) { };
 
-    /* ********************************************************************** */
+        /* ********************************************************************** */
 
-    // Copy constructor
-    // ...
+        // Copy constructor
+        inline Node(const Node& node) : key(node.key), next(node.next) { };
 
-    // Move constructor
-    // ...
+        // Move constructor
+        inline Node(Node&& node) noexcept : key(std::swap(key, node.key)), next(std::swap(next, node.next)) { };
 
-    /* ********************************************************************** */
+        /* ********************************************************************** */
 
-    // Destructor
-    // ...
+        // Destructor
+        ~Node() = default;
 
-    /* ********************************************************************** */
+        /* ********************************************************************** */
 
-    // Comparison operators
-    // ...
+        // Comparison operators
+        inline bool operator==(const Node& node) const noexcept {
+          return key == node.key;
+        };
 
-    /* ********************************************************************** */
+        inline bool operator!=(const Node& node) const noexcept {
+          return !operator==(node);
+        }
 
-    // Specific member functions
+        /* ********************************************************************** */
 
-    // ...
+        // Specific member functions
+
+        // ...
+
+      };
+
+      Node* head = nullptr;
+      Node* tail = nullptr;
+
+    public:
+
+      // Default constructor
+      List() = default;
+
+      /* ************************************************************************ */
+
+      // Specific constructor
+      List(const TraversableContainer<Data>&); // A list obtained from a TraversableContainer
+      List(const MappableContainer<Data>&); // A list obtained from a MappableContainer
+
+      /* ************************************************************************ */
+
+      // Copy constructor
+      List(const List&);
+
+      // Move constructor
+      List(List&&) noexcept;
+
+      /* ************************************************************************ */
+
+      // Destructor
+      virtual ~List();
+
+      /* ************************************************************************ */
+
+      // Copy assignment
+      List& operator=(const List&);
+
+      // Move assignment
+      List& operator=(List&&) noexcept;
+
+      /* ************************************************************************ */
+
+      // Comparison operators
+      bool operator==(const List&) const noexcept;
+      bool operator!=(const List&) const noexcept;
+
+      /* ************************************************************************ */
+
+      // Specific member functions
+
+      void InsertAtFront(const Data&); // Copy of the value
+      void InsertAtFront(Data&&); // Move of the value
+      void RemoveFromFront(); // (must throw std::length_error when empty)
+      Data FrontNRemove(); // (must throw std::length_error when empty)
+
+      void InsertAtBack(const Data&) ; // Copy of the value
+      void InsertAtBack(Data&&) ; // Move of the value
+      void RemoveFromBack() ; // (must throw std::length_error when empty)
+      Data BackNRemove() ; // (must throw std::length_error when empty)
+
+      /* ************************************************************************ */
+
+      // Specific member functions (inherited from MutableLinearContainer)
+
+      Data& operator[](ulong) override; // Override MutableLinearContainer member (must throw std::out_of_range when out of range)
+
+      Data& Front() override; // Override MutableLinearContainer member (must throw std::length_error when empty)
+
+      Data& Back() override; // Override MutableLinearContainer member (must throw std::length_error when empty)
+
+      /* ************************************************************************ */
+
+      // Specific member functions (inherited from LinearContainer)
+
+      const Data& operator[](ulong) const override; // Override LinearContainer member (must throw std::out_of_range when out of range)
+
+      const Data& Front() const override; // Override LinearContainer member (must throw std::length_error when empty)
+
+      const Data& Back() const override; // Override LinearContainer member (must throw std::length_error when empty)
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from MappableContainer)
+
+      using typename MappableContainer<Data>::MapFun;
+
+      void Map(MapFun) override; // Override MappableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from PreOrderMappableContainer)
+
+      void PreOrderMap(MapFun) override; // Override PreOrderMappableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from PostOrderMappableContainer)
+
+      void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from TraversableContainer)
+
+      using typename TraversableContainer<Data>::TraverseFun;
+
+      void Traverse(TraverseFun) const override; // Override TraversableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from PreOrderTraversableContainer)
+
+      void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from PostOrderTraversableContainer)
+
+      void PostOrderTraverse(TraverseFun) const override; // Override PostOrderTraversableContainer member
+
+      /* ************************************************************************ */
+
+      // Specific member function (inherited from ClearableContainer)
+
+      void Clear() noexcept override; // Override ClearableContainer member
+
+    protected:
+
+      // Auxiliary functions, if necessary!
+      
+      void PostOrderMapHelper(MapFun, Node*);
+
+      void PostOrderTraverseHelper(TraverseFun, Node*) const;
 
   };
 
-  // ...
-
-public:
-
-  // Default constructor
-  // List() specifiers;
-
-  /* ************************************************************************ */
-
-  // Specific constructor
-  // List(argument) specifiers; // A list obtained from a TraversableContainer
-  // List(argument) specifiers; // A list obtained from a MappableContainer
-
-  /* ************************************************************************ */
-
-  // Copy constructor
-  // List(argument) specifiers;
-
-  // Move constructor
-  // List(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Destructor
-  // ~List() specifiers;
-
-  /* ************************************************************************ */
-
-  // Copy assignment
-  // type operator=(argument) specifiers;
-
-  // Move assignment
-  // type operator=(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Specific member functions
-
-  // type InsertAtFront(argument) specifier; // Copy of the value
-  // type InsertAtFront(argument) specifier; // Move of the value
-  // type RemoveFromFront() specifier; // (must throw std::length_error when empty)
-  // type FrontNRemove() specifier; // (must throw std::length_error when empty)
-
-  // type InsertAtBack(argument) specifier; // Copy of the value
-  // type InsertAtBack(argument) specifier; // Move of the value
-  // type RemoveFromBack() specifier; // (must throw std::length_error when empty)
-  // type BackNRemove() specifier; // (must throw std::length_error when empty)
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from MutableLinearContainer)
-
-  // type operator[](argument) specifiers; // Override MutableLinearContainer member (must throw std::out_of_range when out of range)
-
-  // type Front() specifiers; // Override MutableLinearContainer member (must throw std::length_error when empty)
-
-  // type Back() specifiers; // Override MutableLinearContainer member (must throw std::length_error when empty)
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from LinearContainer)
-
-  // type operator[](argument) specifiers; // Override LinearContainer member (must throw std::out_of_range when out of range)
-
-  // type Front() specifiers; // Override LinearContainer member (must throw std::length_error when empty)
-
-  // type Back() specifiers; // Override LinearContainer member (must throw std::length_error when empty)
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MappableContainer)
-
-  // using typename MappableContainer<Data>::MapFun;
-
-  // type Map(argument) specifiers; // Override MappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PreOrderMappableContainer)
-
-  // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PostOrderMappableContainer)
-
-  // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from TraversableContainer)
-
-  // using typename TraversableContainer<Data>::TraverseFun;
-
-  // type Traverse(arguments) specifiers; // Override TraversableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PreOrderTraversableContainer)
-
-  // type PreOrderTraverse(arguments) specifiers; // Override PreOrderTraversableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PostOrderTraversableContainer)
-
-  // type PostOrderTraverse(arguments) specifiers; // Override PostOrderTraversableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from ClearableContainer)
-
-  // type Clear() specifiers; // Override ClearableContainer member
-
-protected:
-
-  // Auxiliary functions, if necessary!
-
-};
-
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
