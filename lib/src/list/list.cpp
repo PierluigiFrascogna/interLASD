@@ -15,7 +15,7 @@ namespace lasd {
 
     // Constructor for a list obtained from a MappableContainer
     template <typename Data>
-    List<Data>::List(const MappableContainer<Data>& mapCont) {
+    List<Data>::List(MappableContainer<Data>&& mapCont) {
         mapCont.Map(
             [this](Data& data){
                 InsertAtBack(std::move(data));
@@ -36,11 +36,9 @@ namespace lasd {
     // Move constructor
     template <typename Data>
     List<Data>::List(List&& moveList) noexcept {
-        moveList.Traverse(
-            [this](Data& data) {
-                InsertAtBack(std::move(data));
-            }
-        );
+        std::swap(head, moveList.head);
+        std::swap(tail, moveList.tail);
+        std::swap(size, moveList.size);
     }
 
     // Destructor
@@ -52,7 +50,7 @@ namespace lasd {
     // Copy assignment
     template <typename Data>
     List<Data>& List<Data>::operator=(const List& copyList) {
-        if (this != &copyList) {
+        if (*this != copyList) {
             Clear();
             copyList.Traverse(
                 [this](const Data& data) {
@@ -67,12 +65,9 @@ namespace lasd {
     template <typename Data>
     List<Data>& List<Data>::operator=(List&& moveList) noexcept {
         if (this != &moveList) {
-            Clear();
-            moveList.Traverse(
-                [this](Data& data) {
-                    InsertAtBack(std::move(data));
-                }
-            );
+            std::swap(head, moveList.head);
+            std::swap(tail, moveList.tail);
+            std::swap(size, moveList.size);
         }
         return *this;
     }
@@ -197,6 +192,24 @@ namespace lasd {
     // index operator (mutable version)
     template <typename Data>
     inline Data& List<Data>::operator[](ulong index) {
+        return const_cast<Data&>(static_cast<const List<Data>*>(this)->operator[](index));
+    }
+
+    // Front element (mutable version)
+    template <typename Data>
+    inline Data& List<Data>::Front() {
+        return const_cast<Data&>(static_cast<const List<Data>*>(this)->Front());
+    }
+
+    // Back element (mutable version)
+    template <typename Data>
+    inline Data& List<Data>::Back() {
+        return const_cast<Data&>(static_cast<const List<Data>*>(this)->Back());
+    }
+
+    // index operator (non-mutable version)
+    template <typename Data>
+    inline const Data& List<Data>::operator[](ulong index) const {
         if (index >= size) { throw std::out_of_range("Index out of range"); }
 
         Node* currNode = head;
@@ -206,36 +219,18 @@ namespace lasd {
         return currNode->key;
     }
 
-    // Front element (mutable version)
-    template <typename Data>
-    inline Data& List<Data>::Front() {
-        if (Empty()) { throw std::length_error("List is empty"); }
-        return head->key;
-    }
-
-    // Back element (mutable version)
-    template <typename Data>
-    inline Data& List<Data>::Back() {
-        if (Empty()) { throw std::length_error("List is empty"); }
-        return tail->key;
-    }
-
-    // index operator (non-mutable version)
-    template <typename Data>
-    inline const Data& List<Data>::operator[](ulong index) const {
-        return const_cast<List<Data>&>(*this).operator[](index);
-    }
-
     // Front element (non-mutable version)
     template <typename Data>
     inline const Data& List<Data>::Front() const {
-        return const_cast<List<Data>&>(*this).Front();
+        if (Empty()) { throw std::length_error("List is empty"); }
+        return head->key;
     }
 
     // Back element (non-mutable version)
     template <typename Data>
     inline const Data& List<Data>::Back() const {
-        return const_cast<List<Data>&>(*this).Back();
+        if (Empty()) { throw std::length_error("List is empty"); }
+        return tail->key;
     }
 
     // Map function

@@ -24,6 +24,7 @@ namespace lasd {
     protected:
 
       using Container::size;
+      using Container::Empty;
 
     public:
 
@@ -48,7 +49,7 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual const Data& operator[](ulong i) const = 0; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
+      virtual const Data& operator[](ulong) const = 0; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
 
       virtual const Data& Front() const; // (non-mutable version; concrete function must throw std::length_error when empty)
 
@@ -92,11 +93,11 @@ namespace lasd {
 
       using LinearContainer<Data>::size;
 
+    public:
+
       using LinearContainer<Data>::operator[];
       using LinearContainer<Data>::Front;
       using LinearContainer<Data>::Back;
-
-    public:
 
       // Destructor
       virtual ~MutableLinearContainer() = default;
@@ -113,7 +114,7 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual Data& operator[](ulong index) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
+      virtual Data& operator[](ulong) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
 
       virtual Data& Front(); // (mutable version; concrete function must throw std::length_error when empty)
 

@@ -3,6 +3,26 @@ namespace lasd {
 
     /* ************************************************************************** */
 
+    // Equality operator
+    template <typename Data>
+    bool LinearContainer<Data>::operator==(const LinearContainer& compLinearCont) const noexcept {
+        if (this == &compLinearCont) { return true; }
+        if (Empty() && compLinearCont.Empty()) { return true; }
+        if (size != compLinearCont.size) { return false; }
+        for(ulong i = 0; i < size; i++) {
+            if(operator[](i) != compLinearCont[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Inequality operator
+    template <typename Data>
+    bool LinearContainer<Data>::operator!=(const LinearContainer& compLinearCont) const noexcept {
+        return !operator==(compLinearCont);
+    }
+
     template <typename Data>
     const Data& LinearContainer<Data>::Front() const {
         if(size == 0) {
@@ -84,14 +104,14 @@ namespace lasd {
     template <typename Data>
     void SortableLinearContainer<Data>::Sort() noexcept {
         for(ulong i=1; i<size; i++){
-            Data key=SortableLinearContainer::operator[](i);
+            Data key=this->operator[](i);
             ulong j=i;
 
-            while (j>0 && SortableLinearContainer::operator[](j-1)>key){
-                SortableLinearContainer::operator[](j)=SortableLinearContainer::operator[](j-1);
+            while (j>0 && this->operator[](j-1)>key){
+                this->operator[](j)=this->operator[](j-1);
                 j--;
             }
-            SortableLinearContainer::operator[](j)=key;
+            this->operator[](j)=key;
         }
     }
 

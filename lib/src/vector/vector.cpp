@@ -34,8 +34,9 @@ namespace lasd {
 
     // Copy constructor
     template <typename Data>
-    Vector<Data>::Vector(const Vector& copyVec): Vector() {
+    Vector<Data>::Vector(const Vector& copyVec) {
         size = copyVec.size;
+        elements = new Data[size];
         std::copy(copyVec.elements, copyVec.elements + copyVec.size, elements);
     } 
 
@@ -95,40 +96,40 @@ namespace lasd {
     // Index operator (mutable version)
     template <typename Data>
     inline Data& Vector<Data>::operator[](ulong index) {
-        if(index >= size) throw std::out_of_range("Index out of range");
-        return elements[index];
+        return const_cast<Data&>(static_cast<const Vector<Data>*>(this)->operator[](index));
     }
 
     // Front element (mutable version)
     template <typename Data>
     inline Data& Vector<Data>::Front() {
-        if(Empty()) throw std::length_error("Vector is empty");
-        return elements[0];
+        return const_cast<Data&>(static_cast<const Vector<Data>*>(this)->Front());
     }
 
     // Back element (mutable version)
     template <typename Data>
     inline Data& Vector<Data>::Back() {
-        if(Empty()) throw std::length_error("Vector is empty");
-        return elements[size - 1];
+        return const_cast<Data&>(static_cast<const Vector<Data>*>(this)->Back());
     }
 
     // Index operator (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::operator[](ulong index) const {
-        return const_cast<Vector<Data>&>(*this).operator[](index);
+        if(index >= size) throw std::out_of_range("Index out of range");
+        return elements[index];
     }
 
     // Front element (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::Front() const {
-        return const_cast<Vector<Data>&>(*this).Front();
+        if(Empty()) throw std::length_error("Vector is empty");
+        return elements[0];
     }
 
     // Back element (non-mutable version)
     template <typename Data>
     inline const Data& Vector<Data>::Back() const {
-        return const_cast<Vector<Data>&>(*this).Back();
+        if(Empty()) throw std::length_error("Vector is empty");
+        return elements[size - 1];
     }
 
     // Resize function
