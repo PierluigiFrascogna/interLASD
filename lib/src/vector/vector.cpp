@@ -13,7 +13,7 @@ namespace lasd {
     // Constructor for a vector obtained from a TraversableContainer
     template <typename Data>
     Vector<Data>::Vector(const TraversableContainer<Data>& travCont): Vector(travCont.Size()){
-        ulong index=0; 
+        ulong index = 0;
         travCont.Traverse(
             [this, &index](const Data& data){
                 elements[index++] = data; 
@@ -23,11 +23,11 @@ namespace lasd {
 
     // Constructor for a vector obtained from a MappableContainer
     template <typename Data>
-    Vector<Data>::Vector(const MappableContainer<Data>& mapCont): Vector(mapCont.Size()) {
+    Vector<Data>::Vector(MappableContainer<Data>&& mapCont): Vector(mapCont.Size()) {
         ulong index = 0;
         mapCont.Map(
             [this, &index](Data& data){
-                elements[index++] = data;
+                elements[index++] = std::move(data);
             }
         );
     }
@@ -76,11 +76,11 @@ namespace lasd {
     // Equality operator
     template <typename Data>
     bool Vector<Data>::operator==(const Vector& compVec) const noexcept {
-        if(size != compVec.size) {
+        if(Size() != compVec.Size()) {
             return false;
         }
-        for(ulong i = 0; i < size; i++) {
-            if(elements[i] != compVec.elements[i]) {
+        for(ulong i = 0; i < Size(); i++) {
+            if((*this)[i] != compVec[i]) {
                 return false;
             }
         }
@@ -168,11 +168,11 @@ namespace lasd {
 
     // Constructor for a vector obtained from a TraversableContainer
     template <typename Data>
-    SortableVector<Data>::SortableVector(const TraversableContainer<Data>& travCont): Vector<Data>(travCont.Size()) { }
+    SortableVector<Data>::SortableVector(const TraversableContainer<Data>& travCont): Vector<Data>(travCont) { }
 
     // Constructor for a vector obtained from a MappableContainer
     template <typename Data>
-    SortableVector<Data>::SortableVector(const MappableContainer<Data>& mapCont): Vector<Data>(mapCont.Size()) { }
+    SortableVector<Data>::SortableVector(MappableContainer<Data>&& mapCont): Vector<Data>(std::move(mapCont)) { }
 
     // Copy constructor
     template <typename Data>

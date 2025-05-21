@@ -31,7 +31,7 @@ namespace lasd {
     template <typename Data>
     template <typename Accumulator>
     inline Accumulator PreOrderTraversableContainer<Data>::PreOrderFold(FoldFun<Accumulator> func, Accumulator acc) const {
-        Traverse(
+        PreOrderTraverse(
             [func, &acc](const Data& val) {
                 acc = func(val, acc);
             }
@@ -44,7 +44,7 @@ namespace lasd {
     template <typename Data>
     template <typename Accumulator>
     inline Accumulator PostOrderTraversableContainer<Data>::PostOrderFold(FoldFun<Accumulator> func, Accumulator acc) const {
-        Traverse(
+        PostOrderTraverse(
             [func, &acc](const Data& val) {
                 acc = func(val, acc);
             }

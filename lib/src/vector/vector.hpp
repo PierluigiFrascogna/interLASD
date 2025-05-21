@@ -37,7 +37,7 @@ namespace lasd {
       // Specific constructors
       Vector(const ulong); // A vector with a given initial dimension
       Vector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-      Vector(const MappableContainer<Data>&); // A vector obtained from a MappableContainer
+      Vector(MappableContainer<Data>&&); // A vector obtained from a MappableContainer
 
       /* ************************************************************************ */
 
@@ -131,7 +131,7 @@ namespace lasd {
       // Specific constructors
       SortableVector(const ulong); // A vector with a given initial dimension
       SortableVector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-      SortableVector(const MappableContainer<Data>&); // A vector obtained from a MappableContainer
+      SortableVector(MappableContainer<Data>&&); // A vector obtained from a MappableContainer
 
       /* ************************************************************************ */
 
