@@ -11,6 +11,9 @@
 #include "../container/linear.hpp"
 #include "../vector/vector.hpp"
 #include "../list/list.hpp"
+#include "../set/set.hpp"
+#include "../set/lst/setlst.hpp"
+// #include "../set/vec/setvec.hpp"
 
 
 using namespace std;
