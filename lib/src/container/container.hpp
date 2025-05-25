@@ -132,7 +132,7 @@ namespace lasd {
 
       // Specific member functions
 
-      virtual void Resize(ulong newSize) noexcept = 0;
+      virtual void Resize(ulong) noexcept = 0;
 
       /* ************************************************************************ */
 

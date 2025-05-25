@@ -14,7 +14,7 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class SetVec: virtual public Set<Data>, virtual protected ResizableContainer {
+  class SetVec: virtual public Set<Data>, virtual protected ResizableContainer, virtual protected Vector<Data> {
     // Must extend Set<Data>,
     //             ResizableContainer
 
@@ -24,9 +24,13 @@ namespace lasd {
 
     protected:
 
+      using Container::Empty;
       using Container::size;
 
-      // ...
+      using Vector<Data>::elements;
+
+      ulong head=0;
+      ulong memorySize=0;
 
     public:
 
@@ -115,6 +119,26 @@ namespace lasd {
     protected:
 
       // Auxiliary functions, if necessary!
+
+      // Binary search
+      ulong BinarySearchIndex(const Data&) const noexcept;
+      // Resize
+      inline void Resize(ulong) noexcept override;
+
+      // Shift the elements from index to the left
+      void ShiftFromIndexToLeft(ulong) noexcept;
+
+      // Shift the elements from index to the right
+      void ShiftFromIndexToRight(ulong) noexcept;
+
+      // Shift the elements from left to index
+      void ShiftFromLeftToIndex(ulong) noexcept;
+
+      // Shift the elements from right to index
+      void ShiftFromRightToIndex(ulong) noexcept;
+
+      // index operator (mutable version)
+      Data& operator[](ulong) override;
 
   };
 
