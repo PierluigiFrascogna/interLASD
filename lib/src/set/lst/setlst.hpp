@@ -24,12 +24,12 @@ namespace lasd {
 
     protected:
 
+      using Container::Empty;
+
       using List<Data>::size;
       using List<Data>::head;
       using List<Data>::tail;
       using typename List<Data>::Node;
-
-      // ...
 
     public:
 
@@ -120,10 +120,10 @@ namespace lasd {
       // Auxiliary functions, if necessary!
 
       // Binary search
-      Node* BinarySearch(const Data&) const noexcept;
+      Node** BinarySearchPred(const Data&) const noexcept;
 
       // Walk the list N steps forward
-      Node* Walk(Node*, ulong) const noexcept;
+      Node** Walk(Node*, ulong) const noexcept;
 
   };
 
