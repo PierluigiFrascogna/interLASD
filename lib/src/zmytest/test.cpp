@@ -13,7 +13,7 @@
 #include "../list/list.hpp"
 #include "../set/set.hpp"
 #include "../set/lst/setlst.hpp"
-// #include "../set/vec/setvec.hpp"
+#include "../set/vec/setvec.hpp"
 
 
 using namespace std;

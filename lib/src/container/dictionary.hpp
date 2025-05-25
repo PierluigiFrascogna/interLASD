@@ -65,7 +65,7 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class OrderedDictionaryContainer {
+  class OrderedDictionaryContainer: virtual public DictionaryContainer<Data> {
     // Must extend DictionaryContainer<Data>
 
     private:
