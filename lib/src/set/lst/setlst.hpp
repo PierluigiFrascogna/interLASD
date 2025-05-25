@@ -126,7 +126,7 @@ namespace lasd {
       Node** BinarySearchPred(const Data&) noexcept;
 
       // Walk the list N steps forward
-      Node** Walk(Node*, ulong) const noexcept;
+      Node** Walk(Node**, ulong) const noexcept;
 
   };
 

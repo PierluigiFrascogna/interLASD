@@ -280,6 +280,7 @@ namespace lasd {
     // Binary search
     template <typename Data>
     ulong SetVec<Data>::BinarySearchIndex(const Data& keyToSearch) const noexcept {
+        if(Empty()) { return 0; }
 
         ulong start = 0, end = size - 1;
 

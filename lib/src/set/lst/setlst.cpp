@@ -185,7 +185,7 @@ namespace lasd {
             head = newNode;
         } else {
             // Insert after the predecessor
-            Node** newNodePtrPtr = Walk(*predNodePtrPtr, 1);
+            Node** newNodePtrPtr = Walk(predNodePtrPtr, 1);
             Node* newNodePtr = *newNodePtrPtr;
             
             newNode->next = newNodePtr;
@@ -212,7 +212,7 @@ namespace lasd {
             head = newNode;
         } else {
             // Insert after the predecessor
-            Node** newNodePtrPtr = Walk(*predNodePtrPtr, 1);
+            Node** newNodePtrPtr = Walk(predNodePtrPtr, 1);
             Node* newNodePtr = *newNodePtrPtr;
 
             newNode->next = newNodePtr;
@@ -228,7 +228,7 @@ namespace lasd {
     // Remove
     template <typename Data>
     bool SetLst<Data>::Remove(const Data& delKey) {
-        if(!Exists()) { return false; }
+        if(!Exists(delKey)) { return false; }
 
         if(delKey == Min()) {
             // Remove from the front
@@ -237,7 +237,7 @@ namespace lasd {
         }
 
         Node** predNodePtrPtr = BinarySearchPred(delKey);
-        Node** predNodeNextPtr = Walk(*predNodePtrPtr, 1);
+        Node** predNodeNextPtr = Walk(predNodePtrPtr, 1);
 
         Node* delNodePtr = *predNodeNextPtr;
 
@@ -250,7 +250,7 @@ namespace lasd {
     // Index operator (const version)
     template <typename Data>
     const Data& SetLst<Data>::operator[](ulong index) const {
-        List<Data>::operator[](index);
+        return List<Data>::operator[](index);
     }
 
     // Exists
@@ -300,7 +300,7 @@ namespace lasd {
 
         while(steps > 1) {
             steps /= 2;
-            Node** midPrevNodePtrPtr = Walk(*prevNodePtrPtr, steps);
+            Node** midPrevNodePtrPtr = Walk(prevNodePtrPtr, steps);
 
             Node* midPrevNodePtr = *midPrevNodePtrPtr;
             if(midPrevNodePtr->key < keyToSearch) {
@@ -311,7 +311,7 @@ namespace lasd {
         const Node* prevNodePtr = *prevNodePtrPtr;
         const bool isNotThePredecessorYet = (prevNodePtr->next != nullptr && prevNodePtr->next->key < keyToSearch);
         if(isNotThePredecessorYet) {
-            prevNodePtrPtr = Walk(*prevNodePtrPtr, 1);
+            prevNodePtrPtr = Walk(prevNodePtrPtr, 1);
         }
 
         return prevNodePtrPtr;
@@ -320,12 +320,11 @@ namespace lasd {
 
     // Walk the list N steps forward
     template <typename Data>
-    SetLst<Data>::Node** SetLst<Data>::Walk(Node* node, ulong steps) const noexcept {
-        Node*& currNodePtr = node;
+    SetLst<Data>::Node** SetLst<Data>::Walk(Node** node, ulong steps) const noexcept {
         for(ulong i = 0; i < steps; ++i) {
-            currNodePtr = currNodePtr->next;
+            node = &((*node)->next);
         }
-        return &currNodePtr;
+        return node;
     }
 
     /* ************************************************************************** */
