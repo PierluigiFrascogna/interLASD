@@ -284,8 +284,8 @@ namespace lasd {
 
     // Binary search non-const version
     template<typename Data>
-    SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& x) const noexcept{
-        return const_cast<SetLst<Data>*>(this)->BinarySearchPred(x); 
+    SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& keyToSearch) const noexcept{
+        return const_cast<SetLst<Data>*>(this)->BinarySearchPred(keyToSearch);
     }
 
     // Binary search
