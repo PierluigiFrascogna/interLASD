@@ -1,4 +1,4 @@
-
+#include "setlst.hpp"
 namespace lasd {
 
     /* ************************************************************************** */
@@ -282,9 +282,15 @@ namespace lasd {
 
     /* ************************************************************************** */
 
+    // Binary search non-const version
+    template<typename Data>
+    SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& x) const noexcept{
+        return const_cast<SetLst<Data>*>(this)->BinarySearchPred(x); 
+    }
+
     // Binary search
     template <typename Data>
-    SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& keyToSearch) const noexcept {
+    SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& keyToSearch) noexcept {
 
         if(Empty() || keyToSearch <= Min()) { return nullptr; }
         if(keyToSearch > Max()) { return &tail; }

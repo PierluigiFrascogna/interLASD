@@ -120,7 +120,10 @@ namespace lasd {
       // Auxiliary functions, if necessary!
 
       // Binary search
-      Node** BinarySearchPred(const Data&) const noexcept;
+      Node** BinarySearchPred(const Data&) const noexcept; 
+
+      // Binary search
+      Node** BinarySearchPred(const Data&) noexcept;
 
       // Walk the list N steps forward
       Node** Walk(Node*, ulong) const noexcept;
