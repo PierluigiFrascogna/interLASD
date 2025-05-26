@@ -29,8 +29,8 @@ namespace lasd {
 
       using Vector<Data>::elements;
 
-      ulong head=0;
-      ulong memorySize=0;
+      ulong head = 0;
+      ulong memorySize = 0;
 
     public:
 
@@ -126,16 +126,16 @@ namespace lasd {
       inline void Resize(ulong) noexcept override;
 
       // Shift the elements from index to the left
-      void ShiftFromIndexToLeft(ulong) noexcept;
+      void ShiftFromIndexToHead(ulong) noexcept;
 
       // Shift the elements from index to the right
-      void ShiftFromIndexToRight(ulong) noexcept;
+      void ShiftFromIndexToTail(ulong) noexcept;
 
       // Shift the elements from left to index
-      void ShiftFromLeftToIndex(ulong) noexcept;
+      void ShiftFromHeadToIndex(ulong) noexcept;
 
       // Shift the elements from right to index
-      void ShiftFromRightToIndex(ulong) noexcept;
+      void ShiftFromTailToIndex(ulong) noexcept;
 
       // index operator (mutable version)
       Data& operator[](ulong) override;

@@ -207,10 +207,11 @@ namespace lasd {
 
         if(size == memorySize) { Resize(memorySize * 2); }
 
-        index < size/2 ? ShiftFromIndexToLeft(index) : ShiftFromIndexToRight(index);
+        if(!Empty() && (*this)[index] < insertKey) { index++; }; 
+
+        index < size/2 ? ShiftFromIndexToHead(index) : ShiftFromIndexToTail(index);
 
         (*this)[index] = insertKey;
-        size++;
         return true;
     }
 
@@ -225,10 +226,11 @@ namespace lasd {
 
         if(size == memorySize) { Resize(memorySize * 2); }
 
-        index < size/2 ? ShiftFromIndexToLeft(index) : ShiftFromIndexToRight(index);
+        if((*this)[index] < insertKey) { index++; }; 
+
+        index < size/2 ? ShiftFromIndexToHead(index) : ShiftFromIndexToTail(index);
 
         (*this)[index] = std::move(insertKey);
-        size++;
         return true;
     }
 
@@ -241,8 +243,7 @@ namespace lasd {
             return false; // Element not found
         }
 
-        index < size/2 ? ShiftFromLeftToIndex(index) : ShiftFromRightToIndex(index);
-        size--;
+        index < size/2 ? ShiftFromHeadToIndex(index) : ShiftFromTailToIndex(index);
         return true;
     }
 
@@ -320,36 +321,40 @@ namespace lasd {
 
     // Shift the elements from index to the left
     template <typename Data>
-    inline void SetVec<Data>::ShiftFromIndexToLeft(ulong index) noexcept {
-        head = (head == 0) ? memorySize - 1 : head - 1;
+    inline void SetVec<Data>::ShiftFromIndexToHead(ulong index) noexcept {
+        size++;
+        head = (head != 0) ? head-1 : memorySize-1;
         for(ulong i = 0; i < index; i++) {
-            (*this)[i] = (*this)[i + 1];
+            (*this)[i] = std::move((*this)[i + 1]);
         }
     }
 
     // Shift the elements from index to the right
     template <typename Data>
-    inline void SetVec<Data>::ShiftFromIndexToRight(ulong index) noexcept {
-        for(ulong i = size; i > index; i--) {
-            (*this)[i] = (*this)[i - 1];
+    inline void SetVec<Data>::ShiftFromIndexToTail(ulong index) noexcept {
+        size++;
+        for(ulong i = size-1; i > index; i--) {
+            (*this)[i] = std::move((*this)[i - 1]);
         }
     }
 
     // Shift the elements from left to index
     template <typename Data>
-    inline void SetVec<Data>::ShiftFromLeftToIndex(ulong index) noexcept {
-        for(ulong i = index; i+1 < memorySize; i++) {
-            (*this)[i] = std::move((*this)[i + 1]);
+    inline void SetVec<Data>::ShiftFromHeadToIndex(ulong index) noexcept {
+        for(ulong i = index; i > 0; i--) {
+            (*this)[i] = std::move((*this)[i - 1]);
         }
+        size--;
+        head++;
     }
 
     // Shift the elements from right to index
     template <typename Data>
-    inline void SetVec<Data>::ShiftFromRightToIndex(ulong index) noexcept {
-        for(ulong i = index; i > 0; i--) {
-            (*this)[i] = std::move((*this)[i - 1]);
+    inline void SetVec<Data>::ShiftFromTailToIndex(ulong index) noexcept {
+        for(ulong i = index; i > size; i++) {
+            (*this)[i] = std::move((*this)[i + 1]);
         }
-        head++;
+        size--;
     }
 
     // index operator (mutable version)
