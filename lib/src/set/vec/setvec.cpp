@@ -36,6 +36,7 @@ namespace lasd {
     SetVec<Data>::SetVec(const SetVec& copySet) {
         memorySize = copySet.memorySize;
         head = copySet.head;
+        elements = new Data[copySet.memorySize];
         std::copy(copySet.elements, copySet.elements + copySet.memorySize, elements);
         size = copySet.size;
     }
