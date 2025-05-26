@@ -186,10 +186,9 @@ namespace lasd {
         } else {
             // Insert after the predecessor
             Node** newNodePtrPtr = Walk(predNodePtrPtr, 1);
-            Node* newNodePtr = *newNodePtrPtr;
             
-            newNode->next = newNodePtr;
-            newNodePtr = newNode;
+            newNode->next = *newNodePtrPtr;
+            *newNodePtrPtr = newNode;
         }
         
         if(newNode->next == nullptr) { tail = newNode; }
