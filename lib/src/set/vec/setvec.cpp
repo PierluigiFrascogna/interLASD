@@ -208,7 +208,7 @@ namespace lasd {
 
         if(size == memorySize) { Resize(memorySize * 2); }
 
-        if(!Empty() && (*this)[index] < insertKey) { index++; }; 
+        if(!Empty() && index < size && (*this)[index] < insertKey) { index++; };
 
         index < size/2 ? ShiftFromIndexToHead(index) : ShiftFromIndexToTail(index);
 
@@ -282,7 +282,8 @@ namespace lasd {
     // Binary search
     template <typename Data>
     ulong SetVec<Data>::BinarySearchIndex(const Data& keyToSearch) const noexcept {
-        if(Empty()) { return 0; }
+        if(Empty() || keyToSearch < Min()) { return 0; }
+        if(keyToSearch > Max()) { return size; }
 
         ulong start = 0, end = size - 1;
 

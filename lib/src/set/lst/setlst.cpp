@@ -244,6 +244,7 @@ namespace lasd {
         if(delNodePtr->next == nullptr) { tail = *predNodePtrPtr; }
 
         delete delNodePtr;
+        size--;
         return true;
     }
 

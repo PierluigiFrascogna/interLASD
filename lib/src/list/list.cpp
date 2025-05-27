@@ -82,7 +82,7 @@ namespace lasd {
         Node* listCurrNode = head;
         Node* compListCurrNode = compList.head;
         for(ulong i = 0; i < size; i++) {
-            if (listCurrNode->key != compListCurrNode->key) { return false; }
+            if (*listCurrNode != *compListCurrNode) { return false; }
             listCurrNode = listCurrNode->next;
             compListCurrNode = compListCurrNode->next;
         }
