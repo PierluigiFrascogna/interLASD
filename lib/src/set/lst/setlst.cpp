@@ -1,4 +1,4 @@
-#include "setlst.hpp"
+
 namespace lasd {
 
     /* ************************************************************************** */
@@ -212,10 +212,9 @@ namespace lasd {
         } else {
             // Insert after the predecessor
             Node** newNodePtrPtr = Walk(predNodePtrPtr, 1);
-            Node* newNodePtr = *newNodePtrPtr;
-
-            newNode->next = newNodePtr;
-            newNodePtr = newNode;
+            
+            newNode->next = *newNodePtrPtr;
+            *newNodePtrPtr = newNode;
         }
 
         if(newNode->next == nullptr) { tail = newNode; }
@@ -236,11 +235,13 @@ namespace lasd {
         }
 
         Node** predNodePtrPtr = BinarySearchPred(delKey);
-        Node** predNodeNextPtr = Walk(predNodePtrPtr, 1);
+        Node** delNodePtrPtr = Walk(predNodePtrPtr, 1);
 
-        Node* delNodePtr = *predNodeNextPtr;
+        Node* delNodePtr = *delNodePtrPtr;
 
-        *predNodeNextPtr = delNodePtr->next;
+        *delNodePtrPtr = (*delNodePtrPtr)->next; // Link the node to the successor
+
+        if(delNodePtr->next == nullptr) { tail = *predNodePtrPtr; }
 
         delete delNodePtr;
         return true;
@@ -266,11 +267,7 @@ namespace lasd {
         Node** predNodePtrPtr = BinarySearchPred(keyToSearch);
 
         Node* predNodePtr = *predNodePtrPtr;
-        if(predNodePtr->next->key == keyToSearch) {
-            return true;
-        } else {
-            return false;
-        }
+        return predNodePtr->next->key == keyToSearch;
     }
 
     // Clear
@@ -319,11 +316,11 @@ namespace lasd {
 
     // Walk the list N steps forward
     template <typename Data>
-    SetLst<Data>::Node** SetLst<Data>::Walk(Node** node, ulong steps) const noexcept {
+    SetLst<Data>::Node** SetLst<Data>::Walk(Node** nodePtrPtr, ulong steps) const noexcept {
         for(ulong i = 0; i < steps; ++i) {
-            node = &((*node)->next);
+            nodePtrPtr = &((*nodePtrPtr)->next);
         }
-        return node;
+        return nodePtrPtr;
     }
 
     /* ************************************************************************** */
