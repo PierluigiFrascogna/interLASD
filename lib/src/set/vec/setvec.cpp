@@ -352,7 +352,7 @@ namespace lasd {
     // Shift the elements from right to index
     template <typename Data>
     inline void SetVec<Data>::ShiftFromTailToIndex(ulong index) noexcept {
-        for(ulong i = index; i > size; i++) {
+        for(ulong i = index; i < size-1; i++) {
             (*this)[i] = std::move((*this)[i + 1]);
         }
         size--;
@@ -360,8 +360,8 @@ namespace lasd {
 
     // index operator (mutable version)
     template<typename Data>
-    Data& SetVec<Data>::operator[](ulong i){
-        return const_cast<Data&>(static_cast<const SetVec<Data>*>(this)->operator[](i));
+    Data& SetVec<Data>::operator[](ulong index){
+        return const_cast<Data&>(static_cast<const SetVec<Data>*>(this)->operator[](index));
     }
 
     /* ************************************************************************** */
