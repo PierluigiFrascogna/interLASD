@@ -112,20 +112,28 @@ namespace lasd {
     // Predecessor
     template <typename Data>
     const Data& SetLst<Data>::Predecessor(const Data& predKey) const {
-        if(Empty()) { throw std::length_error("Set is empty"); }
-        if(predKey <= Min()) { throw std::length_error("No predecessor found"); }
-        
-        Node** predNodePtrPtr = BinarySearchPred(predKey);
-        Node* predNodePtr = *predNodePtrPtr;
-
-        return predNodePtr->key;
+        return (*PredecessorNode(predKey))->key;
     }
 
     // Predecessor and remove
     template <typename Data>
     Data SetLst<Data>::PredecessorNRemove(const Data& predKey) {
-        Data predData = Predecessor(predKey);
-        Remove(predData);
+        Node** predNodePtrPtr = PredecessorNode(predKey);
+        Data predData = (*predNodePtrPtr)->key;
+        
+        const bool isLastNode = predKey > Max();
+        RemoveNode(predNodePtrPtr);
+
+        if(isLastNode) {
+            tail = [*this]() {
+                Node* curr = head;
+                for(ulong i=1;i<size;i++) curr = curr->next;
+                return curr;
+            }();
+            std::cout << "Tail updated to: " << tail->key << std::endl;
+            tail->next = nullptr;
+        }
+
         return predData;
     }
 
@@ -138,30 +146,23 @@ namespace lasd {
     // Successor
     template <typename Data>
     const Data& SetLst<Data>::Successor(const Data& succKey) const {
-        if(Empty()) { throw std::length_error("Set is empty"); }
-        if(succKey >= Max()) { throw std::length_error("No successor found"); }
-
-        if(succKey < Min()) { return Min(); }
-        if(succKey == Min()) { return head->next->key; }
-        
-        Node** predNodePtrPtr = BinarySearchPred(succKey);
-
-        Node* predNodePtr = *predNodePtrPtr;
-        Node* currNodePtr = predNodePtr->next;
-        if(currNodePtr->key == succKey) {
-            return currNodePtr->next->key;
-        } else if(currNodePtr->key > succKey) {
-            return currNodePtr->key;
-        } else {
-            throw std::length_error("No successor found");
-        }
+        return (*SuccessorNode(succKey))->key;
     }
 
     // Successor and remove
     template <typename Data>
     Data SetLst<Data>::SuccessorNRemove(const Data& succKey) {
-        Data succData = Successor(succKey);
-        Remove(succData);
+        Node** predNodePtrPtr = SuccessorNode(succKey);
+        Data succData = (*predNodePtrPtr)->next->key;
+
+        const bool isLastNode = succData == Max();
+        RemoveNode(&((*predNodePtrPtr)->next));
+
+        if(isLastNode) {
+            tail = *predNodePtrPtr;
+            tail->next = nullptr;
+        }
+
         return succData;
     }
 
@@ -174,9 +175,10 @@ namespace lasd {
     // Insert (copy)
     template <typename Data>
     bool SetLst<Data>::Insert(const Data& data) {
-        if(Exists(data)) { return false; }
-
         Node** predNodePtrPtr = BinarySearchPred(data);
+
+        if(ExistsNodeFromPred(predNodePtrPtr, data)) { return false; }
+
         Node* newNode = new Node(data);
 
         if(predNodePtrPtr == nullptr) {
@@ -226,26 +228,20 @@ namespace lasd {
     // Remove
     template <typename Data>
     bool SetLst<Data>::Remove(const Data& delKey) {
-        if(!Exists(delKey)) { return false; }
-
-        if(delKey == Min()) {
-            // Remove from the front
-            List<Data>::RemoveFromFront();
-            return true;
-        }
-
         Node** predNodePtrPtr = BinarySearchPred(delKey);
+        if(!ExistsNodeFromPred(predNodePtrPtr, delKey)) {
+            return false; // Element not found
+        }
+        
         Node** delNodePtrPtr = Walk(predNodePtrPtr, 1);
 
-        Node* delNodePtr = *delNodePtrPtr;
+        const bool isRemoved = RemoveNode(delNodePtrPtr);
+        if(isRemoved && (*predNodePtrPtr)->next == nullptr) {
+            tail = *predNodePtrPtr;
+            tail->next = nullptr;
+        }
 
-        *delNodePtrPtr = (*delNodePtrPtr)->next; // Link the node to the successor
-
-        if(delNodePtr->next == nullptr) { tail = *predNodePtrPtr; }
-
-        delete delNodePtr;
-        size--;
-        return true;
+        return isRemoved;
     }
 
     // Index operator (const version)
@@ -257,18 +253,8 @@ namespace lasd {
     // Exists
     template <typename Data>
     bool SetLst<Data>::Exists(const Data& keyToSearch) const noexcept {
-        if(Empty() || keyToSearch < Min() || keyToSearch > Max()) {
-            return false;
-        }
-
-        if(keyToSearch == Min() || keyToSearch == Max()) {
-            return true;
-        }
-
         Node** predNodePtrPtr = BinarySearchPred(keyToSearch);
-
-        Node* predNodePtr = *predNodePtrPtr;
-        return predNodePtr->next->key == keyToSearch;
+        return ExistsNodeFromPred(predNodePtrPtr, keyToSearch);
     }
 
     // Clear
@@ -279,7 +265,7 @@ namespace lasd {
 
     /* ************************************************************************** */
 
-    // Binary search non-const version
+    // Binary search const version
     template<typename Data>
     SetLst<Data>::Node** SetLst<Data>::BinarySearchPred(const Data& keyToSearch) const noexcept{
         return const_cast<SetLst<Data>*>(this)->BinarySearchPred(keyToSearch);
@@ -322,6 +308,76 @@ namespace lasd {
             nodePtrPtr = &((*nodePtrPtr)->next);
         }
         return nodePtrPtr;
+    }
+
+    // Remove single Node
+    template <typename Data>
+    bool SetLst<Data>::RemoveNode(Node** delNodePtrPtr) noexcept {
+        if(Empty()) { return false; }
+        if(*delNodePtrPtr == head) {
+            List<Data>::RemoveFromFront();
+            return true;
+        }
+
+        Node* delNodePtr = *delNodePtrPtr;
+
+        *delNodePtrPtr = (*delNodePtrPtr)->next; // Link the node to the successor
+
+        delete delNodePtr;
+        size--;
+        return true;
+    }
+
+    // Exists single Node
+    template <typename Data>
+    bool SetLst<Data>::ExistsNodeFromPred(Node** predNodePtrPtr, const Data& keyToSearch) const noexcept {
+        if(Empty() || keyToSearch < Min() || keyToSearch > Max()) {
+            return false;
+        }
+
+        if(keyToSearch == Min() || keyToSearch == Max()) {
+            return true;
+        }
+
+        Node* predNodePtr = *predNodePtrPtr;
+        return predNodePtr->next->key == keyToSearch;
+    }
+
+    // Predecessor atomic function
+    template <typename Data>
+    SetLst<Data>::Node** SetLst<Data>::PredecessorNode(const Data& predKey) const {
+        if(Empty()) { throw std::length_error("Set is empty"); }
+        if(predKey <= Min()) { throw std::length_error("No predecessor found"); }
+
+        return BinarySearchPred(predKey);
+    }
+
+    // Successor atomic function (const version)
+    template <typename Data>
+    SetLst<Data>::Node** SetLst<Data>::SuccessorNode(const Data& succKey) const {
+        return const_cast<SetLst<Data>*>(this)->SuccessorNode(succKey);
+    }
+
+    // Successor atomic function
+    template <typename Data>
+    SetLst<Data>::Node** SetLst<Data>::SuccessorNode(const Data& succKey) {
+        if(Empty()) { throw std::length_error("Set is empty"); }
+        if(succKey >= Max()) { throw std::length_error("No successor found"); }
+
+        if(succKey < Min()) { return &head; }
+        if(succKey == Min()) { return &(head->next); }
+        
+        Node** predNodePtrPtr = BinarySearchPred(succKey);
+
+        Node* predNodePtr = *predNodePtrPtr;
+        Node* currNodePtr = predNodePtr->next;
+        if(currNodePtr->key == succKey) {
+            return &((*predNodePtrPtr)->next);
+        } else if(currNodePtr->key > succKey) {
+            return predNodePtrPtr;
+        } else {
+            throw std::length_error("No successor found");
+        }
     }
 
     /* ************************************************************************** */

@@ -119,7 +119,7 @@ namespace lasd {
 
       // Auxiliary functions, if necessary!
 
-      // Binary search
+      // Binary search (const version)
       Node** BinarySearchPred(const Data&) const noexcept; 
 
       // Binary search
@@ -127,6 +127,21 @@ namespace lasd {
 
       // Walk the list N steps forward
       Node** Walk(Node**, ulong) const noexcept;
+
+      // Remove single Node
+      bool RemoveNode(Node**) noexcept;
+
+      // Exists single Node
+      bool ExistsNodeFromPred(Node** predNodePtrPtr, const Data& keyToSearch) const noexcept;
+
+      // Predecessor atomic function
+      Node** PredecessorNode(const Data&) const;
+
+      // Successor atomic function (const version)
+      Node** SuccessorNode(const Data&) const;
+
+      // Successor atomic function
+      Node** SuccessorNode(const Data&);
 
   };
 
