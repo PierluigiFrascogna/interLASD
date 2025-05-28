@@ -1,7 +1,7 @@
 # Use the official Ubuntu 24.04 image as the base image
 FROM ubuntu:24.04
 
-LABEL Description="Primo progetto per LASD 2025" \
+LABEL Description="Primo e secondo progetto per LASD 2025" \
       Version="1.0" \
       Maintainer="Pierluigi Frascogna"
 
@@ -21,11 +21,11 @@ RUN apt update && apt install -y \
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
 
 # Crea la directory di lavoro e ci entra
-WORKDIR /interLASD1/lib
+WORKDIR /interLASD/lib
 
 # Copia la libreria e cambia i permessi di esecuzione
-COPY ./lib /interLASD1/lib
-RUN chmod +x /interLASD1/lib/start.sh
+COPY ./lib /interLASD/lib
+RUN chmod +x /interLASD/lib/start.sh
 
 ARG objToCompile
 ENV OBJTOCOMPILE=$objToCompile
