@@ -11,82 +11,82 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class HeapVec {
-  // Must extend Heap<Data>,
-  // Could extend Vector<Data>
+  template <typename Data>
+  class HeapVec: virtual public Heap<Data>, virtual protected Vector<Data> {
+    // Must extend Heap<Data>,
+    // Could extend Vector<Data>
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // using Container::???;
+      using Container::size;
 
-  // ...
+      // ...
 
-public:
+    public:
 
-  // Default constructor
-  // HeapVec() specifiers;
+      // Default constructor
+      HeapVec();
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific constructors
-  // HeapVec(argument) specifiers; // A heap obtained from a TraversableContainer
-  // HeapVec(argument) specifiers; // A heap obtained from a MappableContainer
+      // Specific constructors
+      HeapVec(const TraversableContainer<Data>&); // A heap obtained from a TraversableContainer
+      HeapVec(MappableContainer<Data>&&); // A heap obtained from a MappableContainer
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy constructor
-  // HeapVec(argument) specifiers;
+      // Copy constructor
+      HeapVec(const HeapVec&);
 
-  // Move constructor
-  // HeapVec(argument) specifiers;
+      // Move constructor
+      HeapVec(HeapVec&&) noexcept;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Destructor
-  // ~HeapVec() specifiers;
+      // Destructor
+      ~HeapVec();
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument) specifiers;
+      // Copy assignment
+      HeapVec& operator=(const HeapVec&);
 
-  // Move assignment
-  // type operator=(argument) specifiers;
+      // Move assignment
+      HeapVec& operator=(HeapVec&&) noexcept;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+      // Comparison operators
+      bool operator==(const HeapVec&) const noexcept;
+      bool operator!=(const HeapVec&) const noexcept;
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member functions (inherited from Heap)
+      // Specific member functions (inherited from Heap)
 
-  // type IsHeap(argument) specifiers; // Override Heap member
+      bool IsHeap() const noexcept override; // Override Heap member
 
-  // type Heapify(argument) specifiers; // Override Heap member
+      void Heapify() noexcept override; // Override Heap member
 
-  /* ************************************************************************ */
+      /* ************************************************************************ */
 
-  // Specific member function (inherited from SortableLinearContainer)
+      // Specific member function (inherited from SortableLinearContainer)
 
-  // type Sort(argument) specifiers; // Override SortableLinearContainer member
+      void Sort() noexcept override; // Override SortableLinearContainer member
 
-protected:
+    protected:
 
-  // Auxiliary functions, if necessary!
+      // Auxiliary functions, if necessary!
 
-};
+  };
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
