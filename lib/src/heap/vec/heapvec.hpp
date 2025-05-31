@@ -24,9 +24,8 @@ namespace lasd {
 
     protected:
 
-      using Container::size;
-
-      // ...
+      using Vector<Data>::size;
+      using Vector<Data>::elements;
 
     public:
 
