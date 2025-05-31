@@ -24,7 +24,6 @@ namespace lasd {
 
     protected:
 
-      using Container::Empty;
       using Container::size;
 
       using Vector<Data>::elements;
