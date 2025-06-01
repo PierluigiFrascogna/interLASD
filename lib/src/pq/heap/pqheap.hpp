@@ -11,76 +11,81 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class PQHeap {
-  // Must extend PQ<Data>,
-  // Could extend HeapVec<Data>
+  template <typename Data>
+  class PQHeap: virtual public PQ<Data>, virtual protected HeapVec<Data> {
+    // Must extend PQ<Data>,
+    // Could extend HeapVec<Data>
 
-private:
+    private:
 
-  // ...
+      // ...
 
-protected:
+    protected:
 
-  // using Container::???;
+      // using Container::???;
 
-  // ...
+      using HeapVec<Data>::size;
+      using HeapVec<Data>::elements;
+      using HeapVec<Data>::Heapify;
+      using HeapVec<Data>::IsHeap;
 
-public:
+      ulong memorySize = 0;
 
-  // Default constructor
-  // PQHeap() specifiers;
+    public:
 
-  /* ************************************************************************ */
+      // Default constructor
+      PQHeap();
 
-  // Specific constructors
-  // PQHeap(argument) specifiers; // A priority queue obtained from a TraversableContainer
-  // PQHeap(argument) specifiers; // A priority queue obtained from a MappableContainer
+      /* ************************************************************************ */
 
-  /* ************************************************************************ */
+      // Specific constructors
+      PQHeap(const TraversableContainer<Data>&); // A priority queue obtained from a TraversableContainer
+      PQHeap(MappableContainer<Data>&&); // A priority queue obtained from a MappableContainer
 
-  // Copy constructor
-  // PQHeap(argument) specifiers;
+      /* ************************************************************************ */
 
-  // Move constructor
-  // PQHeap(argument) specifiers;
+      // Copy constructor
+      PQHeap(const PQHeap&);
 
-  /* ************************************************************************ */
+      // Move constructor
+      PQHeap(PQHeap&&) noexcept;
 
-  // Destructor
-  // ~PQHeap() specifiers;
+      /* ************************************************************************ */
 
-  /* ************************************************************************ */
+      // Destructor
+      ~PQHeap();
 
-  // Copy assignment
-  // type operator=(argument) specifiers;
+      /* ************************************************************************ */
 
-  // Move assignment
-  // type operator=(argument) specifiers;
+      // Copy assignment
+      PQHeap& operator=(const PQHeap&);
 
-  /* ************************************************************************ */
+      // Move assignment
+      PQHeap& operator=(PQHeap&&) noexcept;
 
-  // Specific member functions (inherited from PQ)
+      /* ************************************************************************ */
 
-  // type Tip(argument) specifiers; // Override PQ member (must throw std::length_error when empty)
-  // type RemoveTip(argument) specifiers; // Override PQ member (must throw std::length_error when empty)
-  // type TipNRemove(argument) specifiers; // Override PQ member (must throw std::length_error when empty)
+      // Specific member functions (inherited from PQ)
 
-  // type Insert(argument) specifiers; // Override PQ member (Copy of the value)
-  // type Insert(argument) specifiers; // Override PQ member (Move of the value)
+      const Data& Tip(); // Override PQ member (must throw std::length_error when empty)
+      void RemoveTip(); // Override PQ member (must throw std::length_error when empty)
+      Data TipNRemove(); // Override PQ member (must throw std::length_error when empty)
 
-  // type Change(argument) specifiers; // Override PQ member (Copy of the value)
-  // type Change(argument) specifiers; // Override PQ member (Move of the value)
+      void Insert(const Data&); // Override PQ member (Copy of the value)
+      void Insert(Data&&) noexcept; // Override PQ member (Move of the value)
 
-protected:
+      void Change(const Data&); // Override PQ member (Copy of the value)
+      void Change(Data&&) noexcept; // Override PQ member (Move of the value)
 
-  // Auxiliary functions, if necessary!
+    protected:
 
-};
+      // Auxiliary functions, if necessary!
 
-/* ************************************************************************** */
+  };
+
+  /* ************************************************************************** */
 
 }
 
