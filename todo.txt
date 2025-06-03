@@ -1,0 +1,4 @@
+1. Ereditarietà setvec e setlst
+2. test
+3. cambiare setvecResize in modo che riduca anche
+4. assicurati che le resize riducano in setvec e pqheap
