@@ -26,9 +26,10 @@ namespace lasd {
 
       // using Container::???;
 
+      using Vector<Data>::Resize;
+
       using HeapVec<Data>::size;
       using HeapVec<Data>::elements;
-      using HeapVec<Data>::Heapify;
       using HeapVec<Data>::IsHeap;
 
       ulong memorySize = 0;
@@ -76,12 +77,18 @@ namespace lasd {
       void Insert(const Data&); // Override PQ member (Copy of the value)
       void Insert(Data&&) noexcept; // Override PQ member (Move of the value)
 
-      void Change(const Data&); // Override PQ member (Copy of the value)
-      void Change(Data&&) noexcept; // Override PQ member (Move of the value)
+      void Change(ulong, const Data&); // Override PQ member (Copy of the value)
+      void Change(ulong, Data&&) noexcept; // Override PQ member (Move of the value)
 
     protected:
 
       // Auxiliary functions, if necessary!
+
+      // Heapify from index to the root
+      void HeapifyUp(ulong) noexcept;
+
+      // Heapify from index to the leaves
+      void HeapifyDown(ulong) noexcept;
 
   };
 

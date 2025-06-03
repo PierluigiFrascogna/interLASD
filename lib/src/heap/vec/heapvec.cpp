@@ -86,22 +86,7 @@ namespace lasd {
     // Heapify the current vector
     template <typename Data>
     void HeapVec<Data>::Heapify() noexcept {
-        if (Empty()) return; // Nothing to heapify in an empty vector
-        for(ulong i = 1; i < size; i++) {
-            ulong leftChildIndex = 2 * i + 1;
-            ulong rightChildIndex = 2 * i + 2;
-            ulong largestIndex = i;
-            if (leftChildIndex < size && elements[leftChildIndex] > elements[largestIndex]) {
-                largestIndex = leftChildIndex;
-            }
-            if (rightChildIndex < size && elements[rightChildIndex] > elements[largestIndex]) {
-                largestIndex = rightChildIndex;
-            }
-            if (largestIndex != i) {
-                std::swap(elements[i], elements[largestIndex]);
-                i = largestIndex; // Continue heapifying down from the largest index
-            }
-        }
+        Heapify(0);
     }
 
     // Sort the current vector using heap sort
@@ -113,6 +98,29 @@ namespace lasd {
             std::swap(Front(), elements[i]); // Move the largest element to the end
             size--; // Reduce the size of the heap
             Heapify(); // Restore the heap property
+        }
+    }
+
+    /* ************************************************************************** */
+
+    // Heapify with index function
+    template <typename Data>
+    void HeapVec<Data>::Heapify(ulong index) noexcept {
+        if (Empty()) return; // Nothing to heapify in an empty vector
+        for(ulong currIndex = index; currIndex < size; currIndex++) {
+            ulong leftChildIndex = 2 * currIndex + 1;
+            ulong rightChildIndex = 2 * currIndex + 2;
+            ulong largestIndex = currIndex;
+            if (leftChildIndex < size && elements[leftChildIndex] > elements[largestIndex]) {
+                largestIndex = leftChildIndex;
+            }
+            if (rightChildIndex < size && elements[rightChildIndex] > elements[largestIndex]) {
+                largestIndex = rightChildIndex;
+            }
+            if (largestIndex != currIndex) {
+                std::swap(elements[currIndex], elements[largestIndex]);
+                currIndex = largestIndex; // Continue heapifying down from the largest index
+            }
         }
     }
 

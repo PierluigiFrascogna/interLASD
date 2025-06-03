@@ -83,6 +83,9 @@ namespace lasd {
 
       // Auxiliary functions, if necessary!
 
+      // Heapify with index function
+      void Heapify(ulong) noexcept;
+
   };
 
   /* ************************************************************************** */
