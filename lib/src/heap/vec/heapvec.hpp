@@ -14,7 +14,7 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class HeapVec: virtual public Heap<Data>, virtual protected Vector<Data> {
+  class HeapVec: virtual public Heap<Data>, protected Vector<Data> {
     // Must extend Heap<Data>,
     // Could extend Vector<Data>
 
@@ -28,6 +28,10 @@ namespace lasd {
       using Vector<Data>::elements;
 
     public:
+
+      using Heap<Data>::Empty;
+      using Heap<Data>::Size;
+      using Heap<Data>::operator[];
 
       // Default constructor
       HeapVec();

@@ -36,6 +36,9 @@ namespace lasd {
 
     public:
 
+      using HeapVec<Data>::Empty;
+      using HeapVec<Data>::Size;
+
       // Default constructor
       PQHeap();
 
@@ -56,7 +59,7 @@ namespace lasd {
       /* ************************************************************************ */
 
       // Destructor
-      ~PQHeap();
+      ~PQHeap() = default;
 
       /* ************************************************************************ */
 
@@ -78,7 +81,7 @@ namespace lasd {
       void Insert(Data&&) noexcept; // Override PQ member (Move of the value)
 
       void Change(ulong, const Data&); // Override PQ member (Copy of the value)
-      void Change(ulong, Data&&) noexcept; // Override PQ member (Move of the value)
+      void Change(ulong, Data&&); // Override PQ member (Move of the value)
 
     protected:
 

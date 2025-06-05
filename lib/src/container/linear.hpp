@@ -171,7 +171,7 @@ namespace lasd {
 
       // Specific member function
 
-      void Sort() noexcept;
+      virtual void Sort() noexcept;
 
     protected:
 

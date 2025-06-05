@@ -38,15 +38,15 @@ namespace lasd {
 
       // Specific member functions
 
-      const Data& Tip() = 0; // (concrete function must throw std::length_error when empty)
-      void RemoveTip() = 0; // (concrete function must throw std::length_error when empty)
-      Data TipNRemove() = 0; // (concrete function must throw std::length_error when empty)
+      virtual const Data& Tip() = 0; // (concrete function must throw std::length_error when empty)
+      virtual void RemoveTip() = 0; // (concrete function must throw std::length_error when empty)
+      virtual Data TipNRemove() = 0; // (concrete function must throw std::length_error when empty)
 
-      void Insert(const Data&) = 0; // Copy of the value
-      void Insert(Data&&) noexcept = 0; // Move of the value
+      virtual void Insert(const Data&) = 0; // Copy of the value
+      virtual void Insert(Data&&) noexcept = 0; // Move of the value
 
-      void Change(const Data&) = 0; // Copy of the value
-      void Change(Data&&) noexcept = 0; // Copy of the value
+      virtual void Change(ulong, const Data&) = 0; // Copy of the value
+      virtual void Change(ulong, Data&&) = 0; // Copy of the value
 
   };
 

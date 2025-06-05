@@ -21,15 +21,11 @@ namespace lasd {
 
     // Copy constructor
     template <typename Data>
-    HeapVec<Data>::HeapVec(const HeapVec& copyHeap): Vector<Data>(copyHeap) {
-        Heapify();
-    }
+    HeapVec<Data>::HeapVec(const HeapVec& copyHeap): Vector<Data>(copyHeap) { }
 
     // Move constructor
     template <typename Data>
-    HeapVec<Data>::HeapVec(HeapVec&& moveHeap) noexcept: Vector<Data>(std::move(moveHeap)) {
-        Heapify();
-    }
+    HeapVec<Data>::HeapVec(HeapVec&& moveHeap) noexcept: Vector<Data>(std::move(moveHeap)) { }
 
     // Destructor
     template <typename Data>
@@ -41,7 +37,6 @@ namespace lasd {
     template <typename Data>
     HeapVec<Data>& HeapVec<Data>::operator=(const HeapVec& copyHeap) {
         Vector<Data>::operator=(copyHeap);
-        Heapify();
         return *this;
     }
 
@@ -49,7 +44,6 @@ namespace lasd {
     template <typename Data>
     HeapVec<Data>& HeapVec<Data>::operator=(HeapVec&& moveHeap) noexcept {
         Vector<Data>::operator=(std::move(moveHeap));
-        Heapify();
         return *this;
     }
 
@@ -70,11 +64,11 @@ namespace lasd {
         return !operator==(compHeapVec);
     }
 
-    // Check if the current vector is a valid heap
+    // isHeap function
     template <typename Data>
     bool HeapVec<Data>::IsHeap() const noexcept {
         if (Empty()) return true; // An empty heap is a valid heap
-        for (ulong parentIndex = 0; parentIndex < size; parentIndex++) {
+        for (ulong parentIndex = 0; parentIndex < size/2; parentIndex++) {
             ulong leftChildIndex = 2 * parentIndex + 1;
             ulong rightChildIndex = 2 * parentIndex + 2;
             if (leftChildIndex < size && elements[parentIndex] < elements[leftChildIndex]) return false;
@@ -83,22 +77,27 @@ namespace lasd {
         return true;
     }
 
-    // Heapify the current vector
+    // Heapify function (build the heap from the current vector)
     template <typename Data>
     void HeapVec<Data>::Heapify() noexcept {
-        Heapify(0);
+        if (Empty()) return;
+        for (ulong i = Size()/2; i > 0; i--) {
+            Heapify(i-1);
+        }
     }
 
-    // Sort the current vector using heap sort
+    // Sort function using heap sort
     template <typename Data>
     void HeapVec<Data>::Sort() noexcept {
-        if (Empty()) return; // Nothing to sort in an empty vector
-        Heapify(); // Ensure the vector is a valid heap
-        for (ulong i = size - 1; i > 0; i--) {
-            std::swap(Front(), elements[i]); // Move the largest element to the end
-            size--; // Reduce the size of the heap
-            Heapify(); // Restore the heap property
+        if (Empty()) return;
+        Heapify();
+        ulong tmpSize = size;
+        for (ulong i = size-1; i > 0; i--) {
+            std::swap(elements[0], elements[i]);
+            size--;
+            Heapify(0);
         }
+        size = tmpSize; // Restore original size after sorting
     }
 
     /* ************************************************************************** */
@@ -106,21 +105,19 @@ namespace lasd {
     // Heapify with index function
     template <typename Data>
     void HeapVec<Data>::Heapify(ulong index) noexcept {
-        if (Empty()) return; // Nothing to heapify in an empty vector
-        for(ulong currIndex = index; currIndex < size; currIndex++) {
-            ulong leftChildIndex = 2 * currIndex + 1;
-            ulong rightChildIndex = 2 * currIndex + 2;
-            ulong largestIndex = currIndex;
-            if (leftChildIndex < size && elements[leftChildIndex] > elements[largestIndex]) {
-                largestIndex = leftChildIndex;
-            }
-            if (rightChildIndex < size && elements[rightChildIndex] > elements[largestIndex]) {
-                largestIndex = rightChildIndex;
-            }
-            if (largestIndex != currIndex) {
-                std::swap(elements[currIndex], elements[largestIndex]);
-                currIndex = largestIndex; // Continue heapifying down from the largest index
-            }
+        if (Empty()) return;
+        ulong leftChildIndex = 2 * index + 1;
+        ulong rightChildIndex = 2 * index + 2;
+        ulong largestIndex = index;
+        if (leftChildIndex < size && elements[leftChildIndex] > elements[largestIndex]) {
+            largestIndex = leftChildIndex;
+        }
+        if (rightChildIndex < size && elements[rightChildIndex] > elements[largestIndex]) {
+            largestIndex = rightChildIndex;
+        }
+        if (largestIndex != index) {
+            std::swap(elements[index], elements[largestIndex]);
+            Heapify(largestIndex);
         }
     }
 

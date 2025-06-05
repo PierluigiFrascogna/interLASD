@@ -33,12 +33,6 @@ namespace lasd {
         std::swap(memorySize, movePQHeap.memorySize);
     }
 
-    // Destructor
-    template <typename Data>
-    PQHeap<Data>::~PQHeap() {
-        delete[] elements;
-    }
-
     // Copy assignment
     template <typename Data>
     PQHeap<Data>& PQHeap<Data>::operator=(const PQHeap& copyPQHeap) {
@@ -116,7 +110,7 @@ namespace lasd {
 
     // Change function (move)
     template <typename Data>
-    void PQHeap<Data>::Change(ulong indexToChange, Data&& newValue) noexcept {
+    void PQHeap<Data>::Change(ulong indexToChange, Data&& newValue) {
         if(indexToChange >= size) { throw std::out_of_range("Index out of range."); }
         Data oldValue = std::move(elements[indexToChange]);
         elements[indexToChange] = std::move(newValue);
@@ -134,8 +128,8 @@ namespace lasd {
     void PQHeap<Data>::HeapifyUp(ulong index) noexcept {
         const std::function<ulong(ulong)> ParentIndex = [](ulong index) {
             return index == 0 ? 0 : (index - 1) / 2;
-        }
-        for(ulong parentIndex = ParentIndex(); elements[index] > elements[ParentIndex]; parentIndex = ParentIndex()) {
+        };
+        for(ulong parentIndex = ParentIndex(index); elements[index] > elements[parentIndex]; parentIndex = ParentIndex(index)) {
             std::swap(elements[index], elements[parentIndex]);
             index = parentIndex;
         }
