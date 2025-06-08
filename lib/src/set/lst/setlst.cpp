@@ -287,7 +287,7 @@ namespace lasd {
 
             Node* midPrevNodePtr = *midPrevNodePtrPtr;
             if(midPrevNodePtr->key < keyToSearch) {
-                prevNodePtrPtr = midPrevNodePtrPtr;
+                prevNodePtrPtr = midPrevNodePtrPtr; // è sbagliato, devi cambiarlo
             }
         }
 

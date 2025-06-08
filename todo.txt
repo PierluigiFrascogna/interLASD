@@ -1,0 +1,10 @@
+1. Ereditarietà setvec e setlst
+2. test
+3. cambiare setvecResize in modo che riduca anche
+4. assicurati che le resize riducano in setvec e pqheap
+5. Fare in modo che pqheap inizi da una memorysize di 8
+6. Cambia la binarysearch di setlst
+7. Clear di vector non cleara ma distrugge (in pqheao va bene?)
+8. Riguardati la gerarchia delle classi basando le interfacce sulla classe ereditata pubblicamente
+
+studiati le catene di chiamate ai costruttori
