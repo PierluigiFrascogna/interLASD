@@ -14,6 +14,10 @@
 #include "../set/set.hpp"
 #include "../set/lst/setlst.hpp"
 #include "../set/vec/setvec.hpp"
+#include "../heap/heap.hpp"
+#include "../heap/vec/heapvec.hpp"
+#include "../pq/pq.hpp"
+#include "../pq/heap/pqheap.hpp"
 
 
 using namespace std;
@@ -22,4 +26,11 @@ using namespace std;
 
 void mytest() {
   
+    cout << "Quick MyTest Suite for LASD" << endl;
+    cout << "--------------------------------" << endl;
+
+    
+
+    cout << "--------------------------------" << endl;
+    
 }

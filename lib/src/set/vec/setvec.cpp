@@ -162,8 +162,13 @@ namespace lasd {
     // Predecessor and remove
     template <typename Data>
     Data SetVec<Data>::PredecessorNRemove(const Data& predKey) {
-        Data predData = Predecessor(predKey);
-        Remove(predData);
+        if(Empty()) { throw std::length_error("Set is empty"); }
+        if(predKey <= Min()) { throw std::length_error("No predecessor found"); }
+        
+        ulong index = BinarySearchIndex(predKey);
+
+        Data predData = (*this)[index - 1];
+        RemoveIndex(index);
         return predData;
     }
 
@@ -186,8 +191,14 @@ namespace lasd {
     // Successor and remove
     template <typename Data>
     Data SetVec<Data>::SuccessorNRemove(const Data& succKey) {
-        Data succData = Successor(succKey);
-        Remove(succData);
+        if(Empty()) { throw std::length_error("Set is empty"); }
+        if(succKey >= Max()) { throw std::length_error("No successor found"); }
+        
+        ulong index = BinarySearchIndex(succKey);
+        ulong delIndex = (*this)[index] > succKey ? index : index + 1;
+
+        Data succData = (*this)[delIndex];
+        RemoveIndex(delIndex);
         return succData;
     }
 
@@ -245,6 +256,9 @@ namespace lasd {
         }
 
         index < size/2 ? ShiftFromHeadToIndex(index) : ShiftFromTailToIndex(index);
+
+        if(size <= memorySize / 4) { Resize(memorySize / 2); }
+
         return true;
     }
 
@@ -363,6 +377,13 @@ namespace lasd {
     template<typename Data>
     Data& SetVec<Data>::operator[](ulong index){
         return const_cast<Data&>(static_cast<const SetVec<Data>*>(this)->operator[](index));
+    }
+
+    // Remove from index
+    template <typename Data>
+    void SetVec<Data>::RemoveIndex(ulong index) noexcept {
+        index < size/2 ? ShiftFromHeadToIndex(index) : ShiftFromTailToIndex(index);
+        if(size <= memorySize / 4) { Resize(memorySize / 2); }
     }
 
     /* ************************************************************************** */

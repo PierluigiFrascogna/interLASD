@@ -29,10 +29,6 @@ namespace lasd {
 
     public:
 
-      using Heap<Data>::Empty;
-      using Heap<Data>::Size;
-      using Heap<Data>::operator[];
-
       // Default constructor
       HeapVec();
 
@@ -82,6 +78,11 @@ namespace lasd {
       // Specific member function (inherited from SortableLinearContainer)
 
       void Sort() noexcept override; // Override SortableLinearContainer member
+
+      using Heap<Data>::Empty;
+      using Heap<Data>::Size;
+      using Heap<Data>::Clear;
+      using Heap<Data>::operator[];
 
     protected:
 

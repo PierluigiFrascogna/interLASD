@@ -139,6 +139,9 @@ namespace lasd {
       // index operator (mutable version)
       Data& operator[](ulong) override;
 
+      // Remove from index
+      void RemoveIndex(ulong) noexcept;
+
   };
 
   /* ************************************************************************** */

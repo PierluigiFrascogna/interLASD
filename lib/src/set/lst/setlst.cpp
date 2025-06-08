@@ -125,12 +125,11 @@ namespace lasd {
         RemoveNode(predNodePtrPtr);
 
         if(isLastNode) {
-            tail = [*this]() {
-                Node* curr = head;
-                for(ulong i=1;i<size;i++) curr = curr->next;
+            tail = [this]() {
+                Node* curr = this->head;
+                for(ulong i=0;i<this->size-1;i++) curr = curr->next;
                 return curr;
             }();
-            std::cout << "Tail updated to: " << tail->key << std::endl;
             tail->next = nullptr;
         }
 
@@ -287,7 +286,7 @@ namespace lasd {
 
             Node* midPrevNodePtr = *midPrevNodePtrPtr;
             if(midPrevNodePtr->key < keyToSearch) {
-                prevNodePtrPtr = midPrevNodePtrPtr; // è sbagliato, devi cambiarlo
+                prevNodePtrPtr = midPrevNodePtrPtr;
             }
         }
 
